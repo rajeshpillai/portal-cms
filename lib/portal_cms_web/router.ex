@@ -18,6 +18,15 @@ defmodule PortalCmsWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+
+    live "/apps", AppLive.Index, :index
+    live "/apps/new", AppLive.Index, :new
+    live "/apps/:id/edit", AppLive.Index, :edit
+
+    live "/apps/:id", AppLive.Show, :show
+    live "/apps/:id/show/edit", AppLive.Show, :edit
+
+
   end
 
   # Other scopes may use custom stacks.
