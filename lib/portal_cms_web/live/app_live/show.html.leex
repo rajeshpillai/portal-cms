@@ -9,14 +9,17 @@
     return_to: Routes.app_show_path(@socket, :show, @app) %>
 <% end %>
 
-<ul>
-
-  <li>
+<div>
+  <div>
     <strong>Name:</strong>
     <%= @app.name %>
-  </li>
+  </div>
 
-</ul>
+  <div>
+    <button>Add Navigation</button>
+  </div>
+
+</div>
 
 <span><%= live_patch "Edit", to: Routes.app_show_path(@socket, :edit, @app), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.app_index_path(@socket, :index) %></span>
