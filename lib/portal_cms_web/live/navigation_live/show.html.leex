@@ -1,0 +1,22 @@
+<h1>Show Navigation</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, PortalCmsWeb.NavigationLive.FormComponent,
+    id: @navigation.id,
+    title: @page_title,
+    action: @live_action,
+    navigation: @navigation,
+    return_to: Routes.navigation_show_path(@socket, :show, @navigation) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @navigation.name %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.navigation_show_path(@socket, :edit, @navigation), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.navigation_index_path(@socket, :index) %></span>
