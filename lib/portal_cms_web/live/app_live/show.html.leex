@@ -16,10 +16,12 @@
   </div>
 
   <div>
-    <button>Add Navigation</button>
+    <%= live_patch "Add Navigation", to: Routes.navigation_index_path(@socket, :index) %>
   </div>
 
 </div>
 
-<span><%= live_patch "Edit", to: Routes.app_show_path(@socket, :edit, @app), class: "button" %></span>
-<span><%= live_redirect "Back", to: Routes.app_index_path(@socket, :index) %></span>
+<div>
+  <span><%= live_patch "Edit", to: Routes.app_show_path(@socket, :edit, @app), class: "button" %></span>
+  <span><%= live_redirect "Back", to: Routes.app_index_path(@socket, :index) %></span>
+</div>
