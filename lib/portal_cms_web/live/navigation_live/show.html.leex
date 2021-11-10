@@ -23,10 +23,23 @@
 </ul>
 
 <h4>Menu Items</h4>
-<form>
-  <input type="text" placeholder="title" />
-  <input type="text" placeholder="url" />
-  <button>Add Menu Item</button>
+
+<%= f = form_for @changeset, "#",
+  phx_submit: "add_nav_item" %>
+
+  <div class="field">
+    <%= text_input f, :title, placeholder: "Title",
+          autocomplete: "off" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="field">
+    <%= text_input f, :url, placeholder: "Url",
+          autocomplete: "off" %>
+    <%= error_tag f, :url %>
+  </div>
+
+  <%= submit "Add Item", phx_disable_with: "Adding..." %>
 </form>
 
 <span><%= live_redirect "Back", to: Routes.navigation_index_path(@socket, :index) %></span>
