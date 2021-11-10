@@ -13,7 +13,7 @@ defmodule PortalCmsWeb.NavigationLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:navigation, Portal.get_navigation!(id))}
+     |> assign(:navigation, Portal.get_navigation_with_app!(id))}
   end
 
   defp page_title(:show), do: "Show Navigation"

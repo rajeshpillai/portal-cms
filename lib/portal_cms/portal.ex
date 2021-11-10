@@ -133,6 +133,11 @@ defmodule PortalCms.Portal do
   """
   def get_navigation!(id), do: Repo.get!(Navigation, id)
 
+  def get_navigation_with_app!(id) do
+    Repo.get!(Navigation, id)
+      |> Repo.preload(:app)
+  end
+
   @doc """
   Creates a navigation.
 

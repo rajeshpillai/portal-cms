@@ -10,13 +10,17 @@
 <% end %>
 
 <ul>
-
+  <li>
+    <strong>App:</strong>
+    <%= @navigation.app.name %>
+  </li>
   <li>
     <strong>Name:</strong>
     <%= @navigation.name %>
   </li>
-
 </ul>
+
+<button>Add Menu Items</button>
 
 <span><%= live_patch "Edit", to: Routes.navigation_show_path(@socket, :edit, @navigation), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.navigation_index_path(@socket, :index) %></span>
