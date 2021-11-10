@@ -44,18 +44,15 @@
 </form>
 
 <h4>Menu Items</h4>
-
 <div id="nav_items" phx-update="prepend">
-  <%= for nav_item <- @nav_items do %>
-    <div class="nav-item" id="<%= nav_item.id %>">
-      <div class="title">
-        <%= nav_item.title %>
-      </div>
-      <div class="url">
-        <%= nav_item.url %>
-      </div>
-    </div>
-  <% end %>
+  <table id="nav_items_tbl"  class="table table-condensed">
+    <%= for nav_item <- @nav_items do %>
+      <tr class="nav-item" id="<%= nav_item.id %>">
+        <td><%= nav_item.title %></td>
+        <td><%= nav_item.url %></td>
+      </tr>
+    <% end %>
+  </table>
 </div>
 
 <span><%= live_redirect "Back", to: Routes.navigation_index_path(@socket, :index) %></span>
