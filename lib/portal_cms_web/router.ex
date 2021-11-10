@@ -14,6 +14,11 @@ defmodule PortalCmsWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # todo: RP
+  pipeline :json_api do
+    plug :accepts, ["json-api"]
+  end
+
   scope "/", PortalCmsWeb do
     pipe_through :browser
 
@@ -34,6 +39,12 @@ defmodule PortalCmsWeb.Router do
     live "/navigations/:id", NavigationLive.Show, :show
     live "/navigations/:id/show/edit", NavigationLive.Show, :edit
 
+  end
+
+  scope "/api", PortalCmsWeb do
+    pipe_through :json_api
+
+    get "/navigations/:nav_id", PortalController, :index
   end
 
   # Other scopes may use custom stacks.
