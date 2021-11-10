@@ -41,6 +41,11 @@
           autocomplete: "off" %>
     <%= error_tag f, :url %>
   </div>
+  <div class="field">
+    <%= text_input f, :seq_no, placeholder: "Sequence",
+          autocomplete: "off" %>
+    <%= error_tag f, :seq_no %>
+  </div>
   <br>
   <%= submit "Add Item", phx_disable_with: "Adding...", class: "btn btn-primary" %>
 </form>
@@ -52,12 +57,14 @@
       <tr>
         <th>Title</th>
         <th>Url</th>
+        <th>Sequence</th>
       </tr>
     </thead>
     <%= for nav_item <- @nav_items do %>
       <tr class="nav-item" id="<%= nav_item.id %>">
         <td><%= nav_item.title %></td>
         <td><%= nav_item.url %></td>
+        <td><%= nav_item.seq_no %></td>
       </tr>
     <% end %>
   </table>
