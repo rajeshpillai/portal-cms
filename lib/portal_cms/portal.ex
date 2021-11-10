@@ -218,6 +218,13 @@ defmodule PortalCms.Portal do
     Repo.all(NavItem)
   end
 
+  def list_nav_items(nav_id) do
+    q = from p in NavItem, where: p.navigation_id == ^nav_id
+    Repo.all(q)
+
+  end
+
+
   @doc """
   Gets a single nav_item.
 

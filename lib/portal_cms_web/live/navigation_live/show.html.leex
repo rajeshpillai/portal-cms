@@ -12,6 +12,8 @@
 <ul>
   <li>
     <strong>App:</strong>
+    <span><%= live_patch "Edit", to: Routes.navigation_show_path(@socket, :edit, @navigation), class: "button" %></span>
+
     <%= @navigation.app.name %>
   </li>
   <li>
@@ -20,7 +22,11 @@
   </li>
 </ul>
 
-<button>Add Menu Items</button>
+<h4>Menu Items</h4>
+<form>
+  <input type="text" placeholder="title" />
+  <input type="text" placeholder="url" />
+  <button>Add Menu Item</button>
+</form>
 
-<span><%= live_patch "Edit", to: Routes.navigation_show_path(@socket, :edit, @navigation), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.navigation_index_path(@socket, :index) %></span>
