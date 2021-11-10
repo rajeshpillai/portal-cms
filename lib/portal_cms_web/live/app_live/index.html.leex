@@ -1,4 +1,4 @@
-<h1>Listing Apps</h1>
+<h1>Applications</h1>
 
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, PortalCmsWeb.AppLive.FormComponent,
@@ -9,7 +9,7 @@
     return_to: Routes.app_index_path(@socket, :index) %>
 <% end %>
 
-<table>
+<table class="table table-bordered">
   <thead>
     <tr>
       <th>Name</th>
@@ -23,7 +23,7 @@
         <td><%= app.name %></td>
 
         <td>
-          <span><%= live_redirect "Show", to: Routes.app_show_path(@socket, :show, app) %></span>
+          <span><%= live_redirect "Manage", to: Routes.app_show_path(@socket, :show, app) %></span>
           <span><%= live_patch "Edit", to: Routes.app_index_path(@socket, :edit, app) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: app.id, data: [confirm: "Are you sure?"] %></span>
         </td>
