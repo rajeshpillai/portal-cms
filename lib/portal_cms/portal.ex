@@ -202,4 +202,100 @@ defmodule PortalCms.Portal do
   def change_navigation(%Navigation{} = navigation, attrs \\ %{}) do
     Navigation.changeset(navigation, attrs)
   end
+
+  alias PortalCms.Portal.NavItem
+
+  @doc """
+  Returns the list of nav_items.
+
+  ## Examples
+
+      iex> list_nav_items()
+      [%NavItem{}, ...]
+
+  """
+  def list_nav_items do
+    Repo.all(NavItem)
+  end
+
+  @doc """
+  Gets a single nav_item.
+
+  Raises `Ecto.NoResultsError` if the Nav item does not exist.
+
+  ## Examples
+
+      iex> get_nav_item!(123)
+      %NavItem{}
+
+      iex> get_nav_item!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_nav_item!(id), do: Repo.get!(NavItem, id)
+
+  @doc """
+  Creates a nav_item.
+
+  ## Examples
+
+      iex> create_nav_item(%{field: value})
+      {:ok, %NavItem{}}
+
+      iex> create_nav_item(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_nav_item(attrs \\ %{}) do
+    %NavItem{}
+    |> NavItem.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a nav_item.
+
+  ## Examples
+
+      iex> update_nav_item(nav_item, %{field: new_value})
+      {:ok, %NavItem{}}
+
+      iex> update_nav_item(nav_item, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_nav_item(%NavItem{} = nav_item, attrs) do
+    nav_item
+    |> NavItem.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a nav_item.
+
+  ## Examples
+
+      iex> delete_nav_item(nav_item)
+      {:ok, %NavItem{}}
+
+      iex> delete_nav_item(nav_item)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_nav_item(%NavItem{} = nav_item) do
+    Repo.delete(nav_item)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking nav_item changes.
+
+  ## Examples
+
+      iex> change_nav_item(nav_item)
+      %Ecto.Changeset{data: %NavItem{}}
+
+  """
+  def change_nav_item(%NavItem{} = nav_item, attrs \\ %{}) do
+    NavItem.changeset(nav_item, attrs)
+  end
 end

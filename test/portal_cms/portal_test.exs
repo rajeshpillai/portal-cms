@@ -120,4 +120,65 @@ defmodule PortalCms.PortalTest do
       assert %Ecto.Changeset{} = Portal.change_navigation(navigation)
     end
   end
+
+  describe "nav_items" do
+    alias PortalCms.Portal.NavItem
+
+    @valid_attrs %{title: "some title", url: "some url"}
+    @update_attrs %{title: "some updated title", url: "some updated url"}
+    @invalid_attrs %{title: nil, url: nil}
+
+    def nav_item_fixture(attrs \\ %{}) do
+      {:ok, nav_item} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Portal.create_nav_item()
+
+      nav_item
+    end
+
+    test "list_nav_items/0 returns all nav_items" do
+      nav_item = nav_item_fixture()
+      assert Portal.list_nav_items() == [nav_item]
+    end
+
+    test "get_nav_item!/1 returns the nav_item with given id" do
+      nav_item = nav_item_fixture()
+      assert Portal.get_nav_item!(nav_item.id) == nav_item
+    end
+
+    test "create_nav_item/1 with valid data creates a nav_item" do
+      assert {:ok, %NavItem{} = nav_item} = Portal.create_nav_item(@valid_attrs)
+      assert nav_item.title == "some title"
+      assert nav_item.url == "some url"
+    end
+
+    test "create_nav_item/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Portal.create_nav_item(@invalid_attrs)
+    end
+
+    test "update_nav_item/2 with valid data updates the nav_item" do
+      nav_item = nav_item_fixture()
+      assert {:ok, %NavItem{} = nav_item} = Portal.update_nav_item(nav_item, @update_attrs)
+      assert nav_item.title == "some updated title"
+      assert nav_item.url == "some updated url"
+    end
+
+    test "update_nav_item/2 with invalid data returns error changeset" do
+      nav_item = nav_item_fixture()
+      assert {:error, %Ecto.Changeset{}} = Portal.update_nav_item(nav_item, @invalid_attrs)
+      assert nav_item == Portal.get_nav_item!(nav_item.id)
+    end
+
+    test "delete_nav_item/1 deletes the nav_item" do
+      nav_item = nav_item_fixture()
+      assert {:ok, %NavItem{}} = Portal.delete_nav_item(nav_item)
+      assert_raise Ecto.NoResultsError, fn -> Portal.get_nav_item!(nav_item.id) end
+    end
+
+    test "change_nav_item/1 returns a nav_item changeset" do
+      nav_item = nav_item_fixture()
+      assert %Ecto.Changeset{} = Portal.change_nav_item(nav_item)
+    end
+  end
 end
