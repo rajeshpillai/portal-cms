@@ -39,8 +39,8 @@ defmodule PortalCmsWeb.NavigationLive.Show do
         nav_items = Portal.list_nav_items(nav_item.navigation_id)
 
         socket = socket |>
-            assign(changeset: changeset)
-            assign(:nav_items, nav_items)
+            assign(changeset: changeset) |>
+            assign(nav_items: nav_items)
 
         :timer.sleep(500)
 
