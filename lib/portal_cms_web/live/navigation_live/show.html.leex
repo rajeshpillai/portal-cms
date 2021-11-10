@@ -28,6 +28,7 @@
   phx_submit: "add_nav_item" %>
 
   <div class="field">
+    <%= hidden_input f, :navigation_id %>
     <%= text_input f, :title, placeholder: "Title",
           autocomplete: "off" %>
     <%= error_tag f, :title %>
@@ -41,5 +42,20 @@
 
   <%= submit "Add Item", phx_disable_with: "Adding..." %>
 </form>
+
+<h4>Menu Items</h4>
+
+<div id="nav_items" phx-update="prepend">
+  <%= for nav_item <- @nav_items do %>
+    <div class="nav-item" id="<%= nav_item.id %>">
+      <div class="title">
+        <%= nav_item.title %>
+      </div>
+      <div class="url">
+        <%= nav_item.url %>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <span><%= live_redirect "Back", to: Routes.navigation_index_path(@socket, :index) %></span>

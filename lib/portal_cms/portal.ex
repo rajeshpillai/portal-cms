@@ -254,6 +254,8 @@ defmodule PortalCms.Portal do
 
   """
   def create_nav_item(attrs \\ %{}) do
+    IO.inspect( attrs )
+
     %NavItem{}
     |> NavItem.changeset(attrs)
     |> Repo.insert()

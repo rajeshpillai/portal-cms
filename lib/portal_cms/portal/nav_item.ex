@@ -17,7 +17,7 @@ defmodule PortalCms.Portal.NavItem do
   @doc false
   def changeset(nav_item, attrs) do
     nav_item
-    |> cast(attrs, [:title, :url])
+    |> cast(attrs, [:title, :url, :navigation_id])
     |> validate_required([:title, :url])
   end
 end
