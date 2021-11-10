@@ -1,4 +1,4 @@
-<h1>Show Navigation</h1>
+<h1>Manage Navigation</h1>
 
 <%= if @live_action in [:edit] do %>
   <%= live_modal @socket, PortalCmsWeb.NavigationLive.FormComponent,
@@ -9,20 +9,22 @@
     return_to: Routes.navigation_show_path(@socket, :show, @navigation) %>
 <% end %>
 
-<ul>
-  <li>
+<div>
+  <div>
     <strong>App:</strong>
     <span><%= live_patch "Edit", to: Routes.navigation_show_path(@socket, :edit, @navigation), class: "button" %></span>
 
     <%= @navigation.app.name %>
-  </li>
-  <li>
+  </div>
+  <div>
     <strong>Name:</strong>
     <%= @navigation.name %>
-  </li>
-</ul>
+  </div>
+</div>
 
-<h4>Menu Items</h4>
+<br>
+
+<h6>Add Menu Items</h6>
 
 <%= f = form_for @changeset, "#",
   phx_submit: "add_nav_item" %>
@@ -39,13 +41,19 @@
           autocomplete: "off" %>
     <%= error_tag f, :url %>
   </div>
-
-  <%= submit "Add Item", phx_disable_with: "Adding..." %>
+  <br>
+  <%= submit "Add Item", phx_disable_with: "Adding...", class: "btn btn-primary" %>
 </form>
 
-<h4>Menu Items</h4>
+<h6>Menu Items</h6>
 <div id="nav_items" phx-update="prepend">
-  <table id="nav_items_tbl"  class="table table-condensed">
+  <table id="nav_items_tbl"  class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Url</th>
+      </tr>
+    </thead>
     <%= for nav_item <- @nav_items do %>
       <tr class="nav-item" id="<%= nav_item.id %>">
         <td><%= nav_item.title %></td>
