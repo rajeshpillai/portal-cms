@@ -7,6 +7,7 @@ defmodule PortalCms.Portal.NavItem do
   schema "nav_items" do
     field :title, :string
     field :url, :string
+    field :seq_no, :integer
     # field :navigation_id, :id
     # field :parent_id, :id
 
@@ -19,7 +20,7 @@ defmodule PortalCms.Portal.NavItem do
   @doc false
   def changeset(nav_item, attrs) do
     nav_item
-    |> cast(attrs, [:title, :url, :navigation_id])
+    |> cast(attrs, [:title, :url, :navigation_id, :seq_no, :parent_id])
     |> validate_required([:title, :url])
   end
 end
