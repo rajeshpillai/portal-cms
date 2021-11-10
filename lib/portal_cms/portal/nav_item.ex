@@ -2,7 +2,7 @@ defmodule PortalCms.Portal.NavItem do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @derive {Jason.Encoder, only: [:id, :title, :url]}
+  @derive {Jason.Encoder, only: [:id, :title, :url, :seq_no, :parent_id]}
 
   schema "nav_items" do
     field :title, :string
