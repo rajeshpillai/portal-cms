@@ -12,8 +12,8 @@ defmodule PortalCmsWeb.PortalController do
   end
 
 
-  def get_page(conn, %{"id" => id}) do
-    pages = Portal.get_page!(id)
+  def get_content_page(conn, %{"id" => id}) do
+    pages = Portal.get_content_page!(id)
 
     json(conn, %{data: pages})
   end
