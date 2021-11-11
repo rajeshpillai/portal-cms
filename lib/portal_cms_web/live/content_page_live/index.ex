@@ -5,8 +5,10 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
   alias PortalCms.Portal.ContentPage
 
   @impl true
-  def mount(%{"app_id" => id} = params, _session, socket) do
-    app = Portal.get_app!(id)
+  def mount(%{"app_id" => app_id} = params, _session, socket) do
+    IO.puts "MOUNT: "
+    IO.inspect params
+    app = Portal.get_app!(app_id)
     socket = socket
         |> assign(:content_pages, list_content_pages())
         |> assign(:app, app)

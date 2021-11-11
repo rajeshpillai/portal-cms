@@ -35,7 +35,10 @@ defmodule PortalCms.Portal do
       ** (Ecto.NoResultsError)
 
   """
-  def get_app!(id), do: Repo.get!(App, id)
+  def get_app!(id)  do
+    IO.puts("Fetching app for ID #{id}")
+    Repo.get!(App, id)
+  end
 
   @doc """
   Creates a app.
