@@ -5,25 +5,36 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
   alias PortalCms.Portal.ContentPage
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :content_pages, list_content_pages())}
+  def mount(%{"app_id" => id} = params, _session, socket) do
+    app = Portal.get_app!(id)
+    socket = socket
+        |> assign(:content_pages, list_content_pages())
+        |> assign(:app, app)
+
+    # {:ok, assign(socket, :content_pages, list_content_pages())}
+    {:ok, socket}
+
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
-    IO.puts("Content Pages: ")
+  def handle_params(%{"app_id" => app_id} = params, _url, socket) do
+    IO.puts("Content Pages: #{app_id} ==> ")
     IO.inspect params
+    app = Portal.get_app!(app_id)
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
+  defp apply_action(socket, :edit, %{"id" => id, "app_id" => app_id} ) do
+    app = Portal.get_app!(app_id)
+
     socket
     |> assign(:page_title, "Edit Content page")
     |> assign(:content_page, Portal.get_content_page!(id))
+    |> assign(:app, app)
   end
 
-  defp apply_action(socket, :new,  %{"app_id" => id}) do
-    app = Portal.get_app!(id)
+  defp apply_action(socket, :new, %{"app_id" => app_id}) do
+    app = Portal.get_app!(app_id)
 
     socket
     |> assign(:page_title, "New Content page")

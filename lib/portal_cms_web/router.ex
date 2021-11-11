@@ -44,7 +44,7 @@ defmodule PortalCmsWeb.Router do
 
     live "/app/:app_id/pages", ContentPageLive.Index, :index
     live "/app/:app_id/pages/new", ContentPageLive.Index, :new
-    live "/content_pages/:id/edit", ContentPageLive.Index, :edit
+    live "/app/:app_id/pages/:id/edit", ContentPageLive.Index, :edit
 
     live "/content_pages/:id", ContentPageLive.Show, :show
     live "/content_pages/:id/show/edit", ContentPageLive.Show, :edit
