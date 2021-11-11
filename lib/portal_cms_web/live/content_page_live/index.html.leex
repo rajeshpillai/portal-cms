@@ -3,10 +3,11 @@
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, PortalCmsWeb.ContentPageLive.FormComponent,
     id: @content_page.id || :new,
+    app: @app,
     title: @page_title,
     action: @live_action,
     content_page: @content_page,
-    return_to: Routes.content_page_index_path(@socket, :index) %>
+    return_to: Routes.content_page_index_path(@socket, :index, @app) %>
 <% end %>
 
 <table class="table table-bordered">
@@ -38,4 +39,4 @@
   </tbody>
 </table>
 
-<span><%= live_patch "New Content page", to: Routes.content_page_index_path(@socket, :new) %></span>
+<span><%= live_patch "New Content page", to: Routes.content_page_index_path(@socket, :new, @app) %></span>

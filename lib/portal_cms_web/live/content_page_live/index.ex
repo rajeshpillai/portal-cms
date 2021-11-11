@@ -11,6 +11,8 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
 
   @impl true
   def handle_params(params, _url, socket) do
+    IO.puts("Content Pages: ")
+    IO.inspect params
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
@@ -20,16 +22,23 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
     |> assign(:content_page, Portal.get_content_page!(id))
   end
 
-  defp apply_action(socket, :new, _params) do
+  defp apply_action(socket, :new,  %{"app_id" => id}) do
+    app = Portal.get_app!(id)
+
     socket
     |> assign(:page_title, "New Content page")
     |> assign(:content_page, %ContentPage{})
+    |> assign(:app, app)
   end
 
-  defp apply_action(socket, :index, _params) do
+  defp apply_action(socket, :index,  %{"app_id" => id}) do
+    app = Portal.get_app!(id)
+    IO.inspect app
+
     socket
     |> assign(:page_title, "Listing Content pages")
     |> assign(:content_page, nil)
+    |> assign(:app, app)
   end
 
   @impl true

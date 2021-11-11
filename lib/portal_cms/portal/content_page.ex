@@ -2,6 +2,8 @@ defmodule PortalCms.Portal.ContentPage do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:id, :title, :slug, :content, :is_published, :app_id]}
+
   schema "content_pages" do
     field :content, :string
     field :is_published, :boolean, default: false
