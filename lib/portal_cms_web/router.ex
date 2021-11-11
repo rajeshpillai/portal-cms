@@ -39,6 +39,10 @@ defmodule PortalCmsWeb.Router do
     live "/navigations/:id", NavigationLive.Show, :show
     live "/navigations/:id/show/edit", NavigationLive.Show, :edit
 
+
+    live "/pages/:app_id", PageLive.Index, :index
+
+
   end
 
   scope "/api", PortalCmsWeb do

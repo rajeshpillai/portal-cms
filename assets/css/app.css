@@ -88,3 +88,8 @@
   display: inline;
   margin: -1rem 0 2rem;
 }
+
+textarea {
+  width: 600px;
+  height: 150px;
+}

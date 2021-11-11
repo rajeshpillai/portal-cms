@@ -181,4 +181,69 @@ defmodule PortalCms.PortalTest do
       assert %Ecto.Changeset{} = Portal.change_nav_item(nav_item)
     end
   end
+
+  describe "pages" do
+    alias PortalCms.Portal.Page
+
+    @valid_attrs %{content: "some content", is_published: true, slug: "some slug", title: "some title"}
+    @update_attrs %{content: "some updated content", is_published: false, slug: "some updated slug", title: "some updated title"}
+    @invalid_attrs %{content: nil, is_published: nil, slug: nil, title: nil}
+
+    def page_fixture(attrs \\ %{}) do
+      {:ok, page} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Portal.create_page()
+
+      page
+    end
+
+    test "list_pages/0 returns all pages" do
+      page = page_fixture()
+      assert Portal.list_pages() == [page]
+    end
+
+    test "get_page!/1 returns the page with given id" do
+      page = page_fixture()
+      assert Portal.get_page!(page.id) == page
+    end
+
+    test "create_page/1 with valid data creates a page" do
+      assert {:ok, %Page{} = page} = Portal.create_page(@valid_attrs)
+      assert page.content == "some content"
+      assert page.is_published == true
+      assert page.slug == "some slug"
+      assert page.title == "some title"
+    end
+
+    test "create_page/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Portal.create_page(@invalid_attrs)
+    end
+
+    test "update_page/2 with valid data updates the page" do
+      page = page_fixture()
+      assert {:ok, %Page{} = page} = Portal.update_page(page, @update_attrs)
+      assert page.content == "some updated content"
+      assert page.is_published == false
+      assert page.slug == "some updated slug"
+      assert page.title == "some updated title"
+    end
+
+    test "update_page/2 with invalid data returns error changeset" do
+      page = page_fixture()
+      assert {:error, %Ecto.Changeset{}} = Portal.update_page(page, @invalid_attrs)
+      assert page == Portal.get_page!(page.id)
+    end
+
+    test "delete_page/1 deletes the page" do
+      page = page_fixture()
+      assert {:ok, %Page{}} = Portal.delete_page(page)
+      assert_raise Ecto.NoResultsError, fn -> Portal.get_page!(page.id) end
+    end
+
+    test "change_page/1 returns a page changeset" do
+      page = page_fixture()
+      assert %Ecto.Changeset{} = Portal.change_page(page)
+    end
+  end
 end

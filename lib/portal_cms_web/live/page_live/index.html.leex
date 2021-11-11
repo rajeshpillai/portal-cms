@@ -1,0 +1,66 @@
+<h3>Pages Configuration</h3>
+
+
+<div>
+  <div>
+    <strong>App:</strong>
+    <%= @app_id %>
+  </div>
+
+</div>
+
+<br>
+
+<h6>New Page</h6>
+
+<%= f = form_for @changeset, "#",
+  phx_submit: "add_nav_item" %>
+
+  <div class="field">
+    <%= hidden_input f, :app_id %>
+    <%= text_input f, :title, placeholder: "Title",
+          autocomplete: "off" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="field">
+    <%= text_input f, :slug, placeholder: "slug",
+          autocomplete: "off" %>
+    <%= error_tag f, :url %>
+  </div>
+
+  <div class="field">
+    <%= textarea f, :content, placeholder: "Content goes here...",
+          autocomplete: "off" %>
+    <%= error_tag f, :content %>
+  </div>
+
+  <div class="field">
+    <%= text_input f, :is_published, placeholder: "Published",
+          autocomplete: "off" %>
+  </div>
+  <br>
+  <%= submit "Save Page", phx_disable_with: "Adding...", class: "btn btn-primary" %>
+</form>
+
+<h6>All App Pages</h6>
+<div id="nav_items" phx-update="prepend">
+  <table id="nav_items_tbl"  class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Slug</th>
+        <th>Published</th>
+      </tr>
+    </thead>
+    <%= for page <- @pages do %>
+      <tr class="page-item" id="<%= page.id %>">
+        <td><%= page.title %></td>
+        <td><%= page.slug %></td>
+        <td><%= page.is_published %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<span><%= live_redirect "Back", to: Routes.navigation_index_path(@socket, :index) %></span>
