@@ -36,9 +36,16 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
   defp apply_action(socket, :new, %{"app_id" => app_id}) do
     app = Portal.get_app!(app_id)
 
+    # changeset = Portal.change_nav_item(%NavItem{}, %{navigation_id: id})
+
+    content_page = Ecto.build_assoc(app, :content_page, %ContentPage{})
+    IO.inspect content_page
+
+
     socket
     |> assign(:page_title, "New Content page")
-    |> assign(:content_page, %ContentPage{})
+    # |> assign(:content_page, Portal.change_content_page(%ContentPage{}, %{app_id: app_id}))
+    |> assign(:content_page, content_page)
     |> assign(:app, app)
   end
 

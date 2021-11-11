@@ -9,7 +9,9 @@ defmodule PortalCms.Portal.ContentPage do
     field :is_published, :boolean, default: false
     field :slug, :string
     field :title, :string
-    field :app_id, :id
+    # field :app_id, :id
+
+    belongs_to  :app, PortalCms.Portal.App
 
     timestamps()
   end
@@ -17,7 +19,7 @@ defmodule PortalCms.Portal.ContentPage do
   @doc false
   def changeset(content_page, attrs) do
     content_page
-    |> cast(attrs, [:content, :slug, :title, :is_published, :app_id])
+    |> cast(attrs, [:id, :content, :slug, :title, :is_published, :app_id])
     |> validate_required([:content, :slug, :title, :is_published])
   end
 end
