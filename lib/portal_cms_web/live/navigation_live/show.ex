@@ -42,11 +42,13 @@ defmodule PortalCmsWeb.NavigationLive.Show do
             assign(changeset: changeset) |>
             assign(nav_items: nav_items)
 
-        :timer.sleep(500)
-
         {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        # changeset = changeset |>
+        #   Map.put(:action, :insert)
+
+        IO.inspect( changeset)
         socket = assign(socket, changeset: changeset)
         {:noreply, socket}
     end
