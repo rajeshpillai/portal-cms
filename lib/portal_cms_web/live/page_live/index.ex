@@ -27,22 +27,22 @@ defmodule PortalCmsWeb.PageLive.Index do
   end
 
   @impl true
-  def handle_event("add_nav_item", %{"nav_item" => params}, socket) do
+  def handle_event("add_page", %{"page" => params}, socket) do
     case Portal.create_page(params) do
-      {:ok, nav_item} ->
+      {:ok, page} ->
         socket =
           update(
             socket,
-            :nav_items,
-            fn nav_items -> [nav_item | nav_items] end
+            :page,
+            fn pages -> [page | pages] end
           )
 
-        changeset = Portal.change_nav_item(%Page{}, %{navigation_id: nav_item.navigation_id})
-        nav_items = Portal.list_nav_items(nav_item.navigation_id)
+        changeset = Portal.change_page(%Page{}, %{app_id: page.app_id})
+        pages = Portal.list_pages(page.app_id)
 
         socket = socket |>
             assign(changeset: changeset) |>
-            assign(nav_items: nav_items)
+            assign(nav_items: pages)
 
         {:noreply, socket}
 

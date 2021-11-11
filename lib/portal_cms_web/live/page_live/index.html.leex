@@ -14,7 +14,7 @@
 <h6>New Page</h6>
 
 <%= f = form_for @changeset, "#",
-  phx_submit: "add_nav_item" %>
+  phx_submit: "add_page" %>
 
   <div class="field">
     <%= hidden_input f, :app_id %>
@@ -40,7 +40,7 @@
           autocomplete: "off" %>
   </div>
   <br>
-  <%= submit "Save Page", phx_disable_with: "Adding...", class: "btn btn-primary" %>
+  <%= submit "Save Page", phx_disable_with: "Saving...", class: "btn btn-primary" %>
 </form>
 
 <h6>All App Pages</h6>
