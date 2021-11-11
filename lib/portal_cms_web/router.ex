@@ -48,7 +48,8 @@ defmodule PortalCmsWeb.Router do
   scope "/api", PortalCmsWeb do
     pipe_through :json_api
 
-    get "/navigations/:nav_id", PortalController, :index
+    get "/navigations/:nav_id", PortalController, :get_navs
+    get "/page/:id", PortalController, :get_page
   end
 
   # Other scopes may use custom stacks.
