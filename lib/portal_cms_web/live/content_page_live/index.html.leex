@@ -1,0 +1,41 @@
+<h3>Listing Content pages</h3>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, PortalCmsWeb.ContentPageLive.FormComponent,
+    id: @content_page.id || :new,
+    title: @page_title,
+    action: @live_action,
+    content_page: @content_page,
+    return_to: Routes.content_page_index_path(@socket, :index) %>
+<% end %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Slug</th>
+      <th>Title</th>
+      <th>Is published</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="content_pages">
+    <%= for content_page <- @content_pages do %>
+      <tr id="content_page-<%= content_page.id %>">
+        <td><%= content_page.content %></td>
+        <td><%= content_page.slug %></td>
+        <td><%= content_page.title %></td>
+        <td><%= content_page.is_published %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.content_page_show_path(@socket, :show, content_page) %></span>
+          <span><%= live_patch "Edit", to: Routes.content_page_index_path(@socket, :edit, content_page) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: content_page.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Content page", to: Routes.content_page_index_path(@socket, :new) %></span>

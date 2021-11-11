@@ -1,0 +1,37 @@
+<h1>Show Content page</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, PortalCmsWeb.ContentPageLive.FormComponent,
+    id: @content_page.id,
+    title: @page_title,
+    action: @live_action,
+    content_page: @content_page,
+    return_to: Routes.content_page_show_path(@socket, :show, @content_page) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @content_page.content %>
+  </li>
+
+  <li>
+    <strong>Slug:</strong>
+    <%= @content_page.slug %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @content_page.title %>
+  </li>
+
+  <li>
+    <strong>Is published:</strong>
+    <%= @content_page.is_published %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.content_page_show_path(@socket, :edit, @content_page), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.content_page_index_path(@socket, :index) %></span>

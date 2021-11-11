@@ -246,4 +246,69 @@ defmodule PortalCms.PortalTest do
       assert %Ecto.Changeset{} = Portal.change_page(page)
     end
   end
+
+  describe "content_pages" do
+    alias PortalCms.Portal.ContentPage
+
+    @valid_attrs %{content: "some content", is_published: true, slug: "some slug", title: "some title"}
+    @update_attrs %{content: "some updated content", is_published: false, slug: "some updated slug", title: "some updated title"}
+    @invalid_attrs %{content: nil, is_published: nil, slug: nil, title: nil}
+
+    def content_page_fixture(attrs \\ %{}) do
+      {:ok, content_page} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Portal.create_content_page()
+
+      content_page
+    end
+
+    test "list_content_pages/0 returns all content_pages" do
+      content_page = content_page_fixture()
+      assert Portal.list_content_pages() == [content_page]
+    end
+
+    test "get_content_page!/1 returns the content_page with given id" do
+      content_page = content_page_fixture()
+      assert Portal.get_content_page!(content_page.id) == content_page
+    end
+
+    test "create_content_page/1 with valid data creates a content_page" do
+      assert {:ok, %ContentPage{} = content_page} = Portal.create_content_page(@valid_attrs)
+      assert content_page.content == "some content"
+      assert content_page.is_published == true
+      assert content_page.slug == "some slug"
+      assert content_page.title == "some title"
+    end
+
+    test "create_content_page/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Portal.create_content_page(@invalid_attrs)
+    end
+
+    test "update_content_page/2 with valid data updates the content_page" do
+      content_page = content_page_fixture()
+      assert {:ok, %ContentPage{} = content_page} = Portal.update_content_page(content_page, @update_attrs)
+      assert content_page.content == "some updated content"
+      assert content_page.is_published == false
+      assert content_page.slug == "some updated slug"
+      assert content_page.title == "some updated title"
+    end
+
+    test "update_content_page/2 with invalid data returns error changeset" do
+      content_page = content_page_fixture()
+      assert {:error, %Ecto.Changeset{}} = Portal.update_content_page(content_page, @invalid_attrs)
+      assert content_page == Portal.get_content_page!(content_page.id)
+    end
+
+    test "delete_content_page/1 deletes the content_page" do
+      content_page = content_page_fixture()
+      assert {:ok, %ContentPage{}} = Portal.delete_content_page(content_page)
+      assert_raise Ecto.NoResultsError, fn -> Portal.get_content_page!(content_page.id) end
+    end
+
+    test "change_content_page/1 returns a content_page changeset" do
+      content_page = content_page_fixture()
+      assert %Ecto.Changeset{} = Portal.change_content_page(content_page)
+    end
+  end
 end

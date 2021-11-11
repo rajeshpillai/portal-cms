@@ -409,4 +409,100 @@ defmodule PortalCms.Portal do
   def change_page(%Page{} = page, attrs \\ %{}) do
     Page.changeset(page, attrs)
   end
+
+  alias PortalCms.Portal.ContentPage
+
+  @doc """
+  Returns the list of content_pages.
+
+  ## Examples
+
+      iex> list_content_pages()
+      [%ContentPage{}, ...]
+
+  """
+  def list_content_pages do
+    Repo.all(ContentPage)
+  end
+
+  @doc """
+  Gets a single content_page.
+
+  Raises `Ecto.NoResultsError` if the Content page does not exist.
+
+  ## Examples
+
+      iex> get_content_page!(123)
+      %ContentPage{}
+
+      iex> get_content_page!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_content_page!(id), do: Repo.get!(ContentPage, id)
+
+  @doc """
+  Creates a content_page.
+
+  ## Examples
+
+      iex> create_content_page(%{field: value})
+      {:ok, %ContentPage{}}
+
+      iex> create_content_page(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_content_page(attrs \\ %{}) do
+    %ContentPage{}
+    |> ContentPage.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a content_page.
+
+  ## Examples
+
+      iex> update_content_page(content_page, %{field: new_value})
+      {:ok, %ContentPage{}}
+
+      iex> update_content_page(content_page, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_content_page(%ContentPage{} = content_page, attrs) do
+    content_page
+    |> ContentPage.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a content_page.
+
+  ## Examples
+
+      iex> delete_content_page(content_page)
+      {:ok, %ContentPage{}}
+
+      iex> delete_content_page(content_page)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_content_page(%ContentPage{} = content_page) do
+    Repo.delete(content_page)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking content_page changes.
+
+  ## Examples
+
+      iex> change_content_page(content_page)
+      %Ecto.Changeset{data: %ContentPage{}}
+
+  """
+  def change_content_page(%ContentPage{} = content_page, attrs \\ %{}) do
+    ContentPage.changeset(content_page, attrs)
+  end
 end

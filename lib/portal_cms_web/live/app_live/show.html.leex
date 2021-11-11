@@ -20,8 +20,11 @@
   </div>
   <div>
     <%= live_patch "Manage Pages", to: Routes.page_index_path(@socket, :index, @app) %>
-  </div>
 
+  </div>
+  <div>
+    <span><%= live_redirect "Content Pages", to: Routes.content_page_index_path(@socket, :index) %></span>
+  </div>
 </div>
 
 <br>
