@@ -79,7 +79,7 @@
 </div>
 <h6>Menu Items</h6>
 <div id="nav_items" phx-update="prepend">
-  <table id="nav_items_tbl"  class="table table-bordered">
+  <table id="nav_items_tbl"  class="table table-bordered" phx-hook="Sortable">
     <thead>
       <tr>
         <th>Id</th>
@@ -89,8 +89,9 @@
         <th>Sequence</th>
       </tr>
     </thead>
+    <tbody>
     <%= for nav_item <- @nav_items do %>
-      <tr class="nav-item" id="<%= nav_item.id %>">
+      <tr draggable="true" ondragstart='start()' ondragover='dragover()' class="nav-item" id="<%= nav_item.id %>">
         <td><%= nav_item.id %></td>
         <td><%= nav_item.title %></td>
         <td><%= nav_item.parent_id %></td>
@@ -102,6 +103,7 @@
         </td>
       </tr>
     <% end %>
+    </tbody>
   </table>
 </div>
 

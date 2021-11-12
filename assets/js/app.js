@@ -20,8 +20,8 @@ import {LiveSocket} from "phoenix_live_view"
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
 
-let Hooks = {};
-Hooks.RichTextEditor = {
+
+const RichTextEditor = {
   mounted() {
     
     console.log("Hooks mounted...");
@@ -44,6 +44,36 @@ Hooks.RichTextEditor = {
     });
   }
 }
+
+const Sortable = {
+  mounted() {
+    $(function () {
+      console.log("Sortable hook mounted...");
+      
+    })
+  }
+}
+
+var row;
+
+function start(){
+  row = event.target;
+}
+function dragover(){
+  var e = event;
+  e.preventDefault();
+
+  let children= Array.from(e.target.parentNode.parentNode.children);
+  if(children.indexOf(e.target.parentNode)>children.indexOf(row))
+    e.target.parentNode.after(row);
+  else
+    e.target.parentNode.before(row);
+}
+
+window.start = start;
+window.dragover = dragover;
+
+const Hooks = {RichTextEditor, Sortable};
 
 
 let liveSocket = new LiveSocket("/live", Socket, {hooks: Hooks, params: {_csrf_token: csrfToken}})
