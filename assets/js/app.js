@@ -56,7 +56,7 @@ const Sortable = {
 
 var row;
 
-function start(){
+function dragstart(){
   row = event.target;
 }
 function dragover(){
@@ -68,9 +68,14 @@ function dragover(){
     e.target.parentNode.after(row);
   else
     e.target.parentNode.before(row);
+
+  let data = getReorderedData();
+}
+ 
+function getReorderedData() {
 }
 
-window.start = start;
+window.dragstart = dragstart;
 window.dragover = dragover;
 
 const Hooks = {RichTextEditor, Sortable};
