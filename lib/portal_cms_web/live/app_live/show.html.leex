@@ -14,12 +14,20 @@
     <strong>Name:</strong>
     <%= @app.name %>
   </div>
+  <br>
 
-  <div>
-    <%= live_patch "Manage Navigation", to: Routes.navigation_index_path(@socket, :index) %>
+  <h5>Actions</h5>
+  <div class="card-group">
+    <div class="card mb-3">
+      <div class="card-body">
+        <%= live_patch "Manage Navigation", to: Routes.navigation_index_path(@socket, :index) %>
+      </div>
+    </div>
   </div>
-  <div>
-    <span><%= live_redirect "Content Pages", to: Routes.content_page_index_path(@socket, :index, @app) %></span>
+  <div class="card">
+    <div class="card-body">
+      <span><%= live_redirect "Content Pages", to: Routes.content_page_index_path(@socket, :index, @app) %></span>
+    </div>
   </div>
 </div>
 
@@ -27,6 +35,6 @@
 <br>
 
 <div>
-  <span><%= live_patch "Edit", to: Routes.app_show_path(@socket, :edit, @app), class: "button" %></span>
+  <span><%= live_patch "Edit", to: Routes.app_show_path(@socket, :edit, @app), class: "btn btn-warning" %></span>
   <span><%= live_redirect "Back", to: Routes.app_index_path(@socket, :index) %></span>
 </div>
