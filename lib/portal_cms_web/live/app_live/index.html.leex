@@ -23,9 +23,9 @@
         <td><%= app.name %></td>
 
         <td>
-          <span><%= live_redirect "Manage", to: Routes.app_show_path(@socket, :show, app) %></span>
-          <span><%= live_patch "Edit", to: Routes.app_index_path(@socket, :edit, app) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: app.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= live_redirect "Manage", to: Routes.app_show_path(@socket, :show, app),  class: "btn btn-primary btn-sm" %></span>
+          <span><%= live_patch "Edit", to: Routes.app_index_path(@socket, :edit, app),  class: "btn btn-warning btn-sm" %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: app.id, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-sm" %></span>
         </td>
       </tr>
     <% end %>

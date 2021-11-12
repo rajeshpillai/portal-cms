@@ -87,8 +87,8 @@
         <td><%= nav_item.url %></td>
         <td><%= nav_item.seq_no %></td>
         <td>
-          <span><%= live_patch "Edit", to: Routes.nav_item_edit_path(@socket, :edit_item, nav_item) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: nav_item.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= live_patch "Edit", to: Routes.nav_item_edit_path(@socket, :edit_item, nav_item), class: "btn btn-warning btn-sm"  %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: nav_item.id, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-sm" %></span>
         </td>
       </tr>
     <% end %>

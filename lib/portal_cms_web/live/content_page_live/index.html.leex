@@ -30,9 +30,8 @@
         <td><%= content_page.is_published %></td>
 
         <td>
-          <span><%= live_redirect "Show", to: Routes.content_page_show_path(@socket, :show, content_page) %></span>
-          <span><%= live_patch "Edit", to: Routes.content_page_index_path(@socket, :edit, @app, content_page) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: content_page.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= live_patch "Edit", to: Routes.content_page_index_path(@socket, :edit, @app, content_page),  class: "btn btn-warning btn-sm" %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: content_page.id, data: [confirm: "Are you sure?"],  class: "btn btn-danger btn-sm" %></span>
         </td>
       </tr>
     <% end %>

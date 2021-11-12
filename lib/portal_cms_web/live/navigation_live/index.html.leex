@@ -23,9 +23,9 @@
         <td><%= navigation.name %></td>
 
         <td>
-          <span><%= live_redirect "Show", to: Routes.navigation_show_path(@socket, :show, navigation) %></span>
-          <span><%= live_patch "Edit", to: Routes.navigation_index_path(@socket, :edit, navigation) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: navigation.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= live_redirect "Manage", to: Routes.navigation_show_path(@socket, :show, navigation),  class: "btn btn-primary btn-sm" %></span>
+          <span><%= live_patch "Edit", to: Routes.navigation_index_path(@socket, :edit, navigation),  class: "btn btn-warning btn-sm" %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: navigation.id, data: [confirm: "Are you sure?"],  class: "btn btn-danger btn-sm" %></span>
         </td>
       </tr>
     <% end %>
