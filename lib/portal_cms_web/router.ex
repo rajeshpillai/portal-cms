@@ -20,9 +20,12 @@ defmodule PortalCmsWeb.Router do
   end
 
   scope "/", PortalCmsWeb do
-    pipe_through :browser
+    pipe_through [:browser]
 
-    live "/", PageLive, :index
+    # live "/", PageLive, :index
+    live "/", AppLive.Index, :index
+
+    # forward "/", Plugs.HomePageRedirector
 
     live "/apps", AppLive.Index, :index
     live "/apps/new", AppLive.Index, :new
