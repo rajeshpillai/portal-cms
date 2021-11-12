@@ -32,6 +32,7 @@ Hooks.RichTextEditor = {
       menubar: false,
       height: 400
     });
+
   },
 
   updated(){
