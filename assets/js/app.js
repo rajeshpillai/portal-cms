@@ -29,7 +29,8 @@ Hooks.RichTextEditor = {
     tinymce.remove(`#${this.el.id}`);
     tinymce.init({
       selector: `#${this.el.id}`,
-      menubar: false
+      menubar: false,
+      height: 400
     });
   },
 
