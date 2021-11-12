@@ -222,7 +222,7 @@ defmodule PortalCms.Portal do
   end
 
   def list_nav_items(nav_id) do
-    q = from p in NavItem, where: p.navigation_id == ^nav_id
+    q = from p in NavItem, where: p.navigation_id == ^nav_id, order_by: p.seq_no
     Repo.all(q)
 
   end
