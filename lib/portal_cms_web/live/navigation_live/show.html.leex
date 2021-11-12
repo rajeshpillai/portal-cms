@@ -37,6 +37,12 @@
   </div>
 
   <div class="field">
+    <%= text_input f, :parent_id, placeholder: "Parent ID",
+          autocomplete: "off" %>
+    <%= error_tag f, :parent_id %>
+  </div>
+
+  <div class="field">
     <%= text_input f, :url, placeholder: "Url",
           autocomplete: "off" %>
     <%= error_tag f, :url %>
@@ -55,14 +61,18 @@
   <table id="nav_items_tbl"  class="table table-bordered">
     <thead>
       <tr>
+        <th>Id</th>
         <th>Title</th>
+        <th>Parent Id</th>
         <th>Url</th>
         <th>Sequence</th>
       </tr>
     </thead>
     <%= for nav_item <- @nav_items do %>
       <tr class="nav-item" id="<%= nav_item.id %>">
+        <td><%= nav_item.id %></td>
         <td><%= nav_item.title %></td>
+        <td><%= nav_item.parent_id %></td>
         <td><%= nav_item.url %></td>
         <td><%= nav_item.seq_no %></td>
       </tr>

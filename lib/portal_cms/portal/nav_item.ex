@@ -12,7 +12,7 @@ defmodule PortalCms.Portal.NavItem do
     # field :parent_id, :id
 
     belongs_to  :navigation, PortalCms.Portal.Navigation
-    belongs_to  :nav_items, PortalCms.Portal.NavItem, foreign_key: :parent_id
+    belongs_to  :nav_item, PortalCms.Portal.NavItem, foreign_key: :parent_id
 
     timestamps()
   end
