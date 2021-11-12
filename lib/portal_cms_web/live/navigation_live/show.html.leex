@@ -9,6 +9,17 @@
     return_to: Routes.navigation_show_path(@socket, :show, @navigation) %>
 <% end %>
 
+
+<%= if @live_action in [:edit_item] do %>
+  <%= live_modal @socket, PortalCmsWeb.NavItemLive.FormComponent,
+    id: @nav_item.id,
+    title: @page_title,
+    action: @live_action,
+    navigation: @nav_item,
+    return_to: Routes.navigation_show_path(@socket, :show, @nav_item) %>
+<% end %>
+
+
 <div>
   <div>
     <strong>App:</strong>
@@ -76,7 +87,7 @@
         <td><%= nav_item.url %></td>
         <td><%= nav_item.seq_no %></td>
         <td>
-          <span><%= live_patch "Edit", to: Routes.navigation_index_path(@socket, :edit, nav_item) %></span>
+          <span><%= live_patch "Edit", to: Routes.nav_item_edit_path(@socket, :edit_item, nav_item) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: nav_item.id, data: [confirm: "Are you sure?"] %></span>
         </td>
       </tr>

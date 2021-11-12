@@ -25,6 +25,15 @@ defmodule PortalCmsWeb.NavigationLive.Show do
   end
 
   @impl true
+  def handle_event("delete", %{"id" => id}, socket) do
+    IO.puts("DELETE***************** #{id}")
+    navigation = Portal.get_nav_item!(id)
+    {:ok, _} = Portal.delete_nav_item(navigation)
+
+    {:noreply, assign(socket, :nav_items, list_navitem())}
+  end
+
+  @impl true
   def handle_event("add_nav_item", %{"nav_item" => params}, socket) do
     case Portal.create_nav_item(params) do
       {:ok, nav_item} ->
@@ -56,4 +65,9 @@ defmodule PortalCmsWeb.NavigationLive.Show do
 
   defp page_title(:show), do: "Show Navigation"
   defp page_title(:edit), do: "Edit Navigation"
+
+
+  defp list_navitem do
+    Portal.list_nav_items()
+  end
 end

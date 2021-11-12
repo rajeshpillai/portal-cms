@@ -1,0 +1,29 @@
+<%= f = form_for @changeset, "#",
+  phx_submit: "update_nav_item" %>
+
+  <div class="field">
+    <%= hidden_input f, :navigation_id %>
+    <%= text_input f, :title, placeholder: "Title",
+          autocomplete: "off" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="field">
+    <%= text_input f, :parent_id, placeholder: "Parent ID",
+          autocomplete: "off" %>
+    <%= error_tag f, :parent_id %>
+  </div>
+
+  <div class="field">
+    <%= text_input f, :url, placeholder: "Url",
+          autocomplete: "off" %>
+    <%= error_tag f, :url %>
+  </div>
+  <div class="field">
+    <%= text_input f, :seq_no, placeholder: "Sequence",
+          autocomplete: "off" %>
+    <%= error_tag f, :seq_no %>
+  </div>
+  <br>
+  <%= submit "Update Item", phx_disable_with: "Updating...", class: "btn btn-primary" %>
+</form>
