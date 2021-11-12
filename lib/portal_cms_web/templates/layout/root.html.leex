@@ -23,22 +23,21 @@
   </head>
   <body>
     <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
+      <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+        <ul class="navbar-nav">
 
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <a href="#" class="phx-logo">
-          <%= link "Portal CMS", to: Routes.app_index_path(@conn, :index) %>
-        </a>
-      </section>
+          <li class="nav-item bg-danger">
+              <%= link "PORTAL CMS", to: Routes.app_index_path(@conn, :index), class: "nav-link text-white" %>
+          </li>
+          <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+            <li class="nav-item">
+              <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "nav-link" %>
+            </li>
+          <% end %>
+      </ul>
+      </nav>
     </header>
-    <%= @inner_content %>
-
+  <%= @inner_content %>
 
   </body>
 </html>
