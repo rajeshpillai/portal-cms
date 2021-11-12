@@ -36,7 +36,7 @@
 <br>
 
 <h6>Add Menu Items</h6>
-<div class="container-fluid">
+<div class="container-fluid border p-2 bg-dark text-white ">
   <%= f = form_for @changeset, "#",
     class: "row row-cols-md-auto g-3 align-items-center",
     phx_submit: "add_nav_item" %>
@@ -77,8 +77,9 @@
       </div>
     </form>
 </div>
+<br>
 <h6>Menu Items</h6>
-<span>Drag to reorder</span>
+<span>Drag to reorder(todo: persist data</span>
 <div id="nav_items" phx-update="prepend">
   <table id="nav_items_tbl"  class="table table-bordered" phx-hook="Sortable">
     <thead>
