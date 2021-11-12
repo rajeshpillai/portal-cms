@@ -33,7 +33,7 @@ defmodule PortalCmsWeb.NavItemLive.Edit do
   end
 
   defp save_nav_item(socket, :update_nav_item, nav_item_params) do
-    IO.puts("**************************")
+    IO.puts("INDEX: SAVE_NAV_ITEM: **************************")
     IO.inspect nav_item_params
     nav_id = nav_item_params["navigation_id"]
 

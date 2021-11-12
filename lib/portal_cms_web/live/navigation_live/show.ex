@@ -35,6 +35,9 @@ defmodule PortalCmsWeb.NavigationLive.Show do
 
   @impl true
   def handle_event("add_nav_item", %{"nav_item" => params}, socket) do
+    IO.puts("ADD_NAV_ITEM *****************")
+    IO.inspect params
+
     case Portal.create_nav_item(params) do
       {:ok, nav_item} ->
         socket =

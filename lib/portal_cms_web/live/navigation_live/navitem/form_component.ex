@@ -23,7 +23,9 @@ defmodule PortalCmsWeb.NavItemLive.FormComponent do
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"navigation" => nav_item_params}, socket) do
+  def handle_event("update_nav_item", %{"nav_item" => nav_item_params}, socket) do
+    IO.puts("Update navitem: *****************")
+    IO.inspect nav_item_params
     save_navigation(socket, socket.assigns.action, nav_item_params)
   end
 

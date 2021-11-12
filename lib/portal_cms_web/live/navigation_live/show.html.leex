@@ -37,27 +37,28 @@
 
 <h6>Add Menu Items</h6>
 <div class="container-fluid">
-  <%= f = form_for @changeset, "#", class: "row row-cols-md-auto g-3 align-items-center",
+  <%= f = form_for @changeset, "#",
+    class: "row row-cols-md-auto g-3 align-items-center",
     phx_submit: "add_nav_item" %>
 
      <div class="col-12">
       <label class="sr-only" for="nav_item_title">Title</label>
       <%= hidden_input f, :navigation_id %>
-      <%= text_input f, :title, placeholder: "Title", name: "nav_item_title",
+      <%= text_input f, :title, placeholder: "Title", name: "nav_item[title]",
             autocomplete: "off", class: "form-control" %>
       <%= error_tag f, :title %>
     </div>
 
       <div class="col-12">
         <label class="sr-only" for="nav_item_parent_id">Parent</label>
-        <%= text_input f, :parent_id, placeholder: "Parent ID", name: "nav_item_parent_id",
+        <%= text_input f, :parent_id, placeholder: "Parent ID", name: "nav_item[parent_id]",
             autocomplete: "off", class: "form-control" %>
         <%= error_tag f, :parent_id %>
       </div>
 
       <div class="col-12">
         <label class="sr-only" for="nav_item_url">Url</label>
-        <%= text_input f, :url, placeholder: "Url", name: "nav_item_url",
+        <%= text_input f, :url, placeholder: "Url", name: "nav_item[url]",
             autocomplete: "off", class: "form-control" %>
         <%= error_tag f, :url %>
       </div>
@@ -65,7 +66,7 @@
 
       <div class="col-12">
         <label class="sr-only" for="nav_item_seq_no">Sequence</label>
-        <%= text_input f, :seq_no, placeholder: "Sequence", name: "nav_item_seq_no",
+        <%= text_input f, :seq_no, placeholder: "Sequence", name: "nav_item[seq_no]",
             autocomplete: "off", class: "form-control m-2" %>
         <%= error_tag f, :seq_no %>
       </div>
@@ -74,10 +75,7 @@
         <label class="sr-only" for="name"></label>
         <%= submit "Add Item", phx_disable_with: "Adding...", class: "form-control btn btn-primary" %>
       </div>
-
-    <br>
-
-  </form>
+    </form>
 </div>
 <h6>Menu Items</h6>
 <div id="nav_items" phx-update="prepend">
