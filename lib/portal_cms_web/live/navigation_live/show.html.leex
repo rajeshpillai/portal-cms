@@ -75,6 +75,10 @@
         <td><%= nav_item.parent_id %></td>
         <td><%= nav_item.url %></td>
         <td><%= nav_item.seq_no %></td>
+        <td>
+          <span><%= live_patch "Edit", to: Routes.navigation_index_path(@socket, :edit, nav_item) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: nav_item.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
       </tr>
     <% end %>
   </table>
