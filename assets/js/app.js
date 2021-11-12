@@ -18,12 +18,40 @@ import topbar from "topbar"
 import {LiveSocket} from "phoenix_live_view"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+
+
+let Hooks = {};
+Hooks.RichTextEditor = {
+  mounted() {
+    
+    console.log("Hooks mounted...");
+
+    tinymce.remove(`#${this.el.id}`);
+    tinymce.init({
+      selector: `#${this.el.id}`,
+      menubar: false
+    });
+  },
+
+  updated(){
+    console.log("Hooks updated...");
+
+    tinymce.init({
+      selector: `#${this.el.id}`,
+      menubar: false
+    });
+  }
+}
+
+
+let liveSocket = new LiveSocket("/live", Socket, {hooks: Hooks, params: {_csrf_token: csrfToken}})
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
 window.addEventListener("phx:page-loading-start", info => topbar.show())
 window.addEventListener("phx:page-loading-stop", info => topbar.hide())
+
+
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()
