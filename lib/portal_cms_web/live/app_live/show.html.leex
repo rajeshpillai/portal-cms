@@ -19,10 +19,6 @@
     <%= live_patch "Manage Navigation", to: Routes.navigation_index_path(@socket, :index) %>
   </div>
   <div>
-    <%= live_patch "Manage Pages", to: Routes.page_index_path(@socket, :index, @app) %>
-
-  </div>
-  <div>
     <span><%= live_redirect "Content Pages", to: Routes.content_page_index_path(@socket, :index, @app) %></span>
   </div>
 </div>
