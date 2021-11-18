@@ -26,7 +26,7 @@
         <td>
           <%# <span><%= live_redirect "Show", to: Routes.feature_show_path(@socket, :show, feature) </span> %>
           <span><%= live_patch "Edit", to: Routes.feature_index_path(@socket, :edit, feature), class: "btn btn-warning" %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: feature.id, data: [confirm: "Are you sure?"], classs: "btn btn-danger" %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: feature.id, data: [confirm: "Are you sure?"], class: "btn btn-danger" %></span>
         </td>
       </tr>
     <% end %>
