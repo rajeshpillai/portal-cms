@@ -67,6 +67,17 @@ defmodule PortalCmsWeb.Router do
     live "/features/:app_id/new", FeatureLive.Index, :new
     live "/features/:id/edit", FeatureLive.Index, :edit
 
+    # live "/roles", RoleLive.Index, :index
+    # live "/roles/new", RoleLive.Index, :new
+    # live "/roles/:id/edit", RoleLive.Index, :edit
+
+    # live "/roles/:id", RoleLive.Show, :show
+    # live "/roles/:id/show/edit", RoleLive.Show, :edit
+
+    live "/roles/:app_id", RoleLive.Index, :index
+    live "/roles/:app_id/new", RoleLive.Index, :new
+    live "/roles/:id/edit", RoleLive.Index, :edit
+
 
   end
 

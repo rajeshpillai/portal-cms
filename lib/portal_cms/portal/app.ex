@@ -7,6 +7,8 @@ defmodule PortalCms.Portal.App do
     has_many :navigations, PortalCms.Portal.Navigation
     has_many :content_page, PortalCms.Portal.ContentPage
     has_many :features, PortalCms.Portal.Feature
+    has_many :roles, PortalCms.Portal.Role
+
     timestamps()
   end
 

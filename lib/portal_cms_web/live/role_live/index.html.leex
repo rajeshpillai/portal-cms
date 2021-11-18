@@ -1,0 +1,36 @@
+<h6>Listing Roles</h6>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, PortalCmsWeb.RoleLive.FormComponent,
+    id: @role.id || :new,
+    title: @page_title,
+    app_id: @app.id,
+    action: @live_action,
+    role: @role,
+    return_to: Routes.role_index_path(@socket, :index, @app) %>
+<% end %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="roles">
+    <%= for role <- @roles do %>
+      <tr id="role-<%= role.id %>">
+        <td><%= role.name %></td>
+
+        <td>
+          <%# <span><%= live_redirect "Show", to: Routes.feature_show_path(@socket, :show, feature) </span> %>
+          <span><%= live_patch "Edit", to: Routes.role_index_path(@socket, :edit, role), class: "btn btn-warning" %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: role.id, data: [confirm: "Are you sure?"], class: "btn btn-danger" %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Role", to: Routes.role_index_path(@socket, :new, @app) %></span>

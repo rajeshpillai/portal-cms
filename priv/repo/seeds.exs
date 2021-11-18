@@ -15,7 +15,7 @@ alias PortalCms.Portal.App
 alias PortalCms.Portal.Navigation
 alias PortalCms.Portal.NavItem
 alias PortalCms.Portal.Feature
-
+alias PortalCms.Portal.Role
 
 require Logger
 
@@ -68,5 +68,22 @@ Repo.insert! %Feature{
 
 Repo.insert! %Feature{
   name: "agent_delete",
+  app_id: app.id
+}
+
+
+# Role seed data
+Repo.insert! %Role{
+  name: "user",
+  app_id: app.id
+}
+
+Repo.insert! %Role{
+  name: "admin",
+  app_id: app.id
+}
+
+Repo.insert! %Role{
+  name: "super_admin",
   app_id: app.id
 }
