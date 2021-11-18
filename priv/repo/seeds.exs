@@ -14,21 +14,23 @@ alias PortalCms.Repo
 alias PortalCms.Portal.App
 alias PortalCms.Portal.Navigation
 alias PortalCms.Portal.NavItem
+alias PortalCms.Portal.Feature
+
 
 require Logger
 
 Repo.delete_all(Navigation)
 Repo.delete_all(App)
 
-result =Repo.insert!(%App{
+app =Repo.insert!(%App{
   name: "Agent Operator Dashboard",
 },returning: [:id])
 
-IO.inspect(result.id)
+IO.inspect(app.id)
 
 nav_result = Repo.insert!(%Navigation{
   name: "MainNav",
-  app_id: result.id,
+  app_id: app.id,
 }, returning: [:id])
 
 
@@ -51,4 +53,20 @@ Repo.insert! %NavItem{
   url: "Url 3",
   seq_no: 3,
   navigation_id: nav_result.id
+}
+
+# Feature seed data
+Repo.insert! %Feature{
+  name: "agent_create",
+  app_id: app.id
+}
+
+Repo.insert! %Feature{
+  name: "agent_edit",
+  app_id: app.id
+}
+
+Repo.insert! %Feature{
+  name: "agent_delete",
+  app_id: app.id
 }
