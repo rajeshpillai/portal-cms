@@ -6,6 +6,7 @@ defmodule PortalCms.Portal.App do
     field :name, :string
     has_many :navigations, PortalCms.Portal.Navigation
     has_many :content_page, PortalCms.Portal.ContentPage
+    has_many :features, PortalCms.Portal.Feature
     timestamps()
   end
 

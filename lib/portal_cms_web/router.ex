@@ -53,6 +53,21 @@ defmodule PortalCmsWeb.Router do
     live "/content_pages/:id/show/edit", ContentPageLive.Show, :edit
 
 
+    #Default genrated Features routes
+
+    # live "/features", FeatureLive.Index, :index
+    # live "/features/new", FeatureLive.Index, :new
+    # live "/features/:id/edit", FeatureLive.Index, :edit
+
+    # live "/features/:id", FeatureLive.Show, :show
+    # live "/features/:id/show/edit", FeatureLive.Show, :edit
+
+    # New routes
+    live "/features/:app_id", FeatureLive.Index, :index
+    live "/features/:app_id/new", FeatureLive.Index, :new
+    live "/features/:id/edit", FeatureLive.Index, :edit
+
+
   end
 
   scope "/api", PortalCmsWeb do

@@ -311,4 +311,63 @@ defmodule PortalCms.PortalTest do
       assert %Ecto.Changeset{} = Portal.change_content_page(content_page)
     end
   end
+
+  describe "features" do
+    alias PortalCms.Portal.Feature
+
+    @valid_attrs %{name: "some name"}
+    @update_attrs %{name: "some updated name"}
+    @invalid_attrs %{name: nil}
+
+    def feature_fixture(attrs \\ %{}) do
+      {:ok, feature} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Portal.create_feature()
+
+      feature
+    end
+
+    test "list_features/0 returns all features" do
+      feature = feature_fixture()
+      assert Portal.list_features() == [feature]
+    end
+
+    test "get_feature!/1 returns the feature with given id" do
+      feature = feature_fixture()
+      assert Portal.get_feature!(feature.id) == feature
+    end
+
+    test "create_feature/1 with valid data creates a feature" do
+      assert {:ok, %Feature{} = feature} = Portal.create_feature(@valid_attrs)
+      assert feature.name == "some name"
+    end
+
+    test "create_feature/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Portal.create_feature(@invalid_attrs)
+    end
+
+    test "update_feature/2 with valid data updates the feature" do
+      feature = feature_fixture()
+      assert {:ok, %Feature{} = feature} = Portal.update_feature(feature, @update_attrs)
+      assert feature.name == "some updated name"
+    end
+
+    test "update_feature/2 with invalid data returns error changeset" do
+      feature = feature_fixture()
+      assert {:error, %Ecto.Changeset{}} = Portal.update_feature(feature, @invalid_attrs)
+      assert feature == Portal.get_feature!(feature.id)
+    end
+
+    test "delete_feature/1 deletes the feature" do
+      feature = feature_fixture()
+      assert {:ok, %Feature{}} = Portal.delete_feature(feature)
+      assert_raise Ecto.NoResultsError, fn -> Portal.get_feature!(feature.id) end
+    end
+
+    test "change_feature/1 returns a feature changeset" do
+      feature = feature_fixture()
+      assert %Ecto.Changeset{} = Portal.change_feature(feature)
+    end
+  end
 end
