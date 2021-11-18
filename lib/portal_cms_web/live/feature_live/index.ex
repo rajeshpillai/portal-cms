@@ -5,8 +5,9 @@ defmodule PortalCmsWeb.FeatureLive.Index do
   alias PortalCms.Portal.Feature
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :features, list_features())}
+  def mount(%{"app_id" => app_id}, _session, socket) do
+
+    {:ok, assign(socket, :features, list_features(app_id))}
   end
 
   @impl true
@@ -47,10 +48,10 @@ defmodule PortalCmsWeb.FeatureLive.Index do
     feature = Portal.get_feature!(id)
     {:ok, _} = Portal.delete_feature(feature)
 
-    {:noreply, assign(socket, :features, list_features())}
+    {:noreply, assign(socket, :features, list_features(feature.app_id))}
   end
 
-  defp list_features do
-    Portal.list_features()
+  defp list_features(app_id) do
+    Portal.list_features(app_id)
   end
 end

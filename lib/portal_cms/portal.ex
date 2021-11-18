@@ -423,6 +423,12 @@ defmodule PortalCms.Portal do
     Repo.all(Feature)
   end
 
+  def list_features(app_id) do
+    q = from p in Feature, where: p.app_id == ^app_id
+    Repo.all(q)
+  end
+
+
   @doc """
   Gets a single feature.
 
