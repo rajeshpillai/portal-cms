@@ -6,7 +6,7 @@
     title: @page_title,
     action: @live_action,
     content_block: @content_block,
-    return_to: Routes.content_block_index_path(@socket, :index) %>
+    return_to: Routes.content_block_index_path(@socket, :index, @app) %>
 <% end %>
 
 <table class="table table-bordered">
@@ -27,8 +27,7 @@
         <td><%= content_block.type %></td>
 
         <td>
-          <span><%= live_redirect "Show", to: Routes.content_block_show_path(@socket, :show, content_block) %></span>
-          <span><%= live_patch "Edit", to: Routes.content_block_index_path(@socket, :edit, content_block) %></span>
+          <span><%= live_patch "Edit", to: Routes.content_block_index_path(@socket, :edit, @app, content_block) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: content_block.id, data: [confirm: "Are you sure?"] %></span>
         </td>
       </tr>
@@ -36,4 +35,4 @@
   </tbody>
 </table>
 
-<span><%= live_patch "New Content block", to: Routes.content_block_index_path(@socket, :new) %></span>
+<span><%= live_patch "New Content block", to: Routes.content_block_index_path(@socket, :new, @app) %></span>

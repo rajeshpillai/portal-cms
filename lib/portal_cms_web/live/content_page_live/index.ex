@@ -10,10 +10,9 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
     IO.inspect params
     app = Portal.get_app!(app_id)
     socket = socket
-        |> assign(:content_pages, list_content_pages())
+        |> assign(:content_pages, list_content_pages(app.id))
         |> assign(:app, app)
 
-    # {:ok, assign(socket, :content_pages, list_content_pages())}
     {:ok, socket}
 
   end
@@ -66,10 +65,10 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
     content_page = Portal.get_content_page!(id)
     {:ok, _} = Portal.delete_content_page(content_page)
 
-    {:noreply, assign(socket, :content_pages, list_content_pages())}
+    {:noreply, assign(socket, :content_pages, list_content_pages(content_page.app_id))}
   end
 
-  defp list_content_pages do
-    Portal.list_content_pages()
+  defp list_content_pages(app_id) do
+    Portal.list_content_pages(app_id)
   end
 end

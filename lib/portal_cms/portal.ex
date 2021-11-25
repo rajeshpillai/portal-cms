@@ -327,6 +327,13 @@ defmodule PortalCms.Portal do
     Repo.all(ContentPage)
   end
 
+  def list_content_pages(app_id) do
+    q = from p in ContentPage, where: p.app_id == ^app_id
+    Repo.all(q)
+  end
+
+
+
   @doc """
   Gets a single content_page.
 
@@ -624,6 +631,12 @@ defmodule PortalCms.Portal do
   """
   def list_content_blocks do
     Repo.all(ContentBlock)
+  end
+
+
+  def list_content_blocks(app_id) do
+    q = from p in ContentBlock, where: p.app_id == ^app_id
+    Repo.all(q)
   end
 
   @doc """

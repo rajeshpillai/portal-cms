@@ -15,7 +15,7 @@ defmodule PortalCms.Portal.ContentBlock do
   @doc false
   def changeset(content_block, attrs) do
     content_block
-    |> cast(attrs, [:content, :is_published, :type])
+    |> cast(attrs, [:content, :is_published, :type, :app_id])
     |> validate_required([:content, :is_published, :type])
   end
 end

@@ -49,8 +49,8 @@ defmodule PortalCmsWeb.Router do
     live "/app/:app_id/pages/new", ContentPageLive.Index, :new
     live "/app/:app_id/pages/:id/edit", ContentPageLive.Index, :edit
 
-    live "/content_pages/:id", ContentPageLive.Show, :show
-    live "/content_pages/:id/show/edit", ContentPageLive.Show, :edit
+    # live "/content_pages/:id", ContentPageLive.Show, :show
+    # live "/content_pages/:id/show/edit", ContentPageLive.Show, :edit
 
 
     #Default genrated Features routes
@@ -80,12 +80,13 @@ defmodule PortalCmsWeb.Router do
 
 
     # Content block
-    live "/content_blocks", ContentBlockLive.Index, :index
-    live "/content_blocks/new", ContentBlockLive.Index, :new
-    live "/content_blocks/:id/edit", ContentBlockLive.Index, :edit
 
-    live "/content_blocks/:id", ContentBlockLive.Show, :show
-    live "/content_blocks/:id/show/edit", ContentBlockLive.Show, :edit
+    live "/app/:app_id/blocks/:app_id", ContentBlockLive.Index, :index
+    live "/app/:app_id/blocks/new", ContentBlockLive.Index, :new
+    live "/app/:app_id/blocks/:id/edit", ContentBlockLive.Index, :edit
+
+    # live "/content_blocks/:id", ContentBlockLive.Show, :show
+    # live "/content_blocks/:id/show/edit", ContentBlockLive.Show, :edit
   end
 
   scope "/api", PortalCmsWeb do
