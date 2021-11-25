@@ -1,0 +1,32 @@
+<h1>Show Content block</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, PortalCmsWeb.ContentBlockLive.FormComponent,
+    id: @content_block.id,
+    title: @page_title,
+    action: @live_action,
+    content_block: @content_block,
+    return_to: Routes.content_block_show_path(@socket, :show, @content_block) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @content_block.content %>
+  </li>
+
+  <li>
+    <strong>Is published:</strong>
+    <%= @content_block.is_published %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @content_block.type %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.content_block_show_path(@socket, :edit, @content_block), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.content_block_index_path(@socket, :index) %></span>

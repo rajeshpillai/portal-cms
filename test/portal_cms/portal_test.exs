@@ -429,4 +429,67 @@ defmodule PortalCms.PortalTest do
       assert %Ecto.Changeset{} = Portal.change_role(role)
     end
   end
+
+  describe "content_blocks" do
+    alias PortalCms.Portal.ContentBlock
+
+    @valid_attrs %{content: "some content", is_published: true, type: "some type"}
+    @update_attrs %{content: "some updated content", is_published: false, type: "some updated type"}
+    @invalid_attrs %{content: nil, is_published: nil, type: nil}
+
+    def content_block_fixture(attrs \\ %{}) do
+      {:ok, content_block} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Portal.create_content_block()
+
+      content_block
+    end
+
+    test "list_content_blocks/0 returns all content_blocks" do
+      content_block = content_block_fixture()
+      assert Portal.list_content_blocks() == [content_block]
+    end
+
+    test "get_content_block!/1 returns the content_block with given id" do
+      content_block = content_block_fixture()
+      assert Portal.get_content_block!(content_block.id) == content_block
+    end
+
+    test "create_content_block/1 with valid data creates a content_block" do
+      assert {:ok, %ContentBlock{} = content_block} = Portal.create_content_block(@valid_attrs)
+      assert content_block.content == "some content"
+      assert content_block.is_published == true
+      assert content_block.type == "some type"
+    end
+
+    test "create_content_block/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Portal.create_content_block(@invalid_attrs)
+    end
+
+    test "update_content_block/2 with valid data updates the content_block" do
+      content_block = content_block_fixture()
+      assert {:ok, %ContentBlock{} = content_block} = Portal.update_content_block(content_block, @update_attrs)
+      assert content_block.content == "some updated content"
+      assert content_block.is_published == false
+      assert content_block.type == "some updated type"
+    end
+
+    test "update_content_block/2 with invalid data returns error changeset" do
+      content_block = content_block_fixture()
+      assert {:error, %Ecto.Changeset{}} = Portal.update_content_block(content_block, @invalid_attrs)
+      assert content_block == Portal.get_content_block!(content_block.id)
+    end
+
+    test "delete_content_block/1 deletes the content_block" do
+      content_block = content_block_fixture()
+      assert {:ok, %ContentBlock{}} = Portal.delete_content_block(content_block)
+      assert_raise Ecto.NoResultsError, fn -> Portal.get_content_block!(content_block.id) end
+    end
+
+    test "change_content_block/1 returns a content_block changeset" do
+      content_block = content_block_fixture()
+      assert %Ecto.Changeset{} = Portal.change_content_block(content_block)
+    end
+  end
 end

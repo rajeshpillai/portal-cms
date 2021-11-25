@@ -8,6 +8,7 @@ defmodule PortalCms.Portal.App do
     has_many :content_page, PortalCms.Portal.ContentPage
     has_many :features, PortalCms.Portal.Feature
     has_many :roles, PortalCms.Portal.Role
+    has_many :content_block, PortalCms.Portal.ContentBlock
 
     timestamps()
   end

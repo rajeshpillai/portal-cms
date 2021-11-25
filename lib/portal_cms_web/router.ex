@@ -79,6 +79,13 @@ defmodule PortalCmsWeb.Router do
     live "/roles/:id/edit", RoleLive.Index, :edit
 
 
+    # Content block
+    live "/content_blocks", ContentBlockLive.Index, :index
+    live "/content_blocks/new", ContentBlockLive.Index, :new
+    live "/content_blocks/:id/edit", ContentBlockLive.Index, :edit
+
+    live "/content_blocks/:id", ContentBlockLive.Show, :show
+    live "/content_blocks/:id/show/edit", ContentBlockLive.Show, :edit
   end
 
   scope "/api", PortalCmsWeb do

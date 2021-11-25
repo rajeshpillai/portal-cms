@@ -1,0 +1,39 @@
+<h6>Listing Content blocks</h6>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, PortalCmsWeb.ContentBlockLive.FormComponent,
+    id: @content_block.id || :new,
+    title: @page_title,
+    action: @live_action,
+    content_block: @content_block,
+    return_to: Routes.content_block_index_path(@socket, :index) %>
+<% end %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Is published</th>
+      <th>Type</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="content_blocks">
+    <%= for content_block <- @content_blocks do %>
+      <tr id="content_block-<%= content_block.id %>">
+        <td><%= content_block.content %></td>
+        <td><%= content_block.is_published %></td>
+        <td><%= content_block.type %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.content_block_show_path(@socket, :show, content_block) %></span>
+          <span><%= live_patch "Edit", to: Routes.content_block_index_path(@socket, :edit, content_block) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: content_block.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Content block", to: Routes.content_block_index_path(@socket, :new) %></span>
