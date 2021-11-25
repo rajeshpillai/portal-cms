@@ -2,6 +2,8 @@ defmodule PortalCms.Portal.ContentBlock do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:id,  :content, :is_published, :app_id]}
+
   schema "content_blocks" do
     field :content, :string
     field :is_published, :boolean, default: false

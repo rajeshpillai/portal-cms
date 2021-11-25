@@ -94,6 +94,7 @@ defmodule PortalCmsWeb.Router do
 
     get "/navigations/:nav_id", PortalController, :get_navs
     get "/page/:id", PortalController, :get_content_page
+    get "/content/:id", PortalController, :get_content_block
   end
 
   # Other scopes may use custom stacks.
