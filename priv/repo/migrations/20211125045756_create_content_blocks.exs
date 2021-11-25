@@ -6,6 +6,7 @@ defmodule PortalCms.Repo.Migrations.CreateContentBlocks do
       add :content, :text
       add :is_published, :boolean, default: false, null: false
       add :type, :string
+      add :slug, :string
       add :app_id, references(:apps, on_delete: :nothing)
 
       timestamps()
