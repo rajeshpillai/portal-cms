@@ -13,5 +13,7 @@ defmodule PortalCms.Repo.Migrations.CreateContentPages do
     end
 
     create index(:content_pages, [:app_id])
+    create unique_index(:content_pages, [:slug])
+
   end
 end

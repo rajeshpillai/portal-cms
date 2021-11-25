@@ -13,5 +13,6 @@ defmodule PortalCms.Repo.Migrations.CreateContentBlocks do
     end
 
     create index(:content_blocks, [:app_id])
+    create unique_index(:content_blocks, [:slug])
   end
 end

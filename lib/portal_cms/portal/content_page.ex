@@ -21,5 +21,6 @@ defmodule PortalCms.Portal.ContentPage do
     content_page
     |> cast(attrs, [:id, :content, :slug, :title, :is_published, :app_id])
     |> validate_required([:content, :slug, :title, :is_published])
+    |> unique_constraint(:slug)
   end
 end

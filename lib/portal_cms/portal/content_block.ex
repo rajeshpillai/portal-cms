@@ -20,5 +20,6 @@ defmodule PortalCms.Portal.ContentBlock do
     content_block
     |> cast(attrs, [:content, :is_published, :type, :slug, :app_id])
     |> validate_required([:content, :is_published, :slug, :type])
+    |> unique_constraint(:slug)
   end
 end
