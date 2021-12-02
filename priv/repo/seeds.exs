@@ -19,11 +19,14 @@ alias PortalCms.Portal.Role
 
 require Logger
 
+Repo.delete_all(Feature)
+Repo.delete_all(Role)
+Repo.delete_all(NavItem)
 Repo.delete_all(Navigation)
 Repo.delete_all(App)
 
 app =Repo.insert!(%App{
-  name: "Agent Operator Dashboard",
+  name: "Tasky",
 },returning: [:id])
 
 IO.inspect(app.id)
@@ -57,17 +60,22 @@ Repo.insert! %NavItem{
 
 # Feature seed data
 Repo.insert! %Feature{
-  name: "agent_create",
+  name: "todo_create",
   app_id: app.id
 }
 
 Repo.insert! %Feature{
-  name: "agent_edit",
+  name: "todo_edit",
   app_id: app.id
 }
 
 Repo.insert! %Feature{
-  name: "agent_delete",
+  name: "todo_delete",
+  app_id: app.id
+}
+
+Repo.insert! %Feature{
+  name: "todo_mark_as_completed",
   app_id: app.id
 }
 
@@ -82,6 +90,12 @@ Repo.insert! %Role{
   name: "admin",
   app_id: app.id
 }
+
+Repo.insert! %Role{
+  name: "manager",
+  app_id: app.id
+}
+
 
 Repo.insert! %Role{
   name: "super_admin",
