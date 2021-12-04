@@ -2,6 +2,8 @@ defmodule PortalCms.Portal.App do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:id, :name]}
+
   schema "apps" do
     field :name, :string
     has_many :navigations, PortalCms.Portal.Navigation

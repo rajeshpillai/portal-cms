@@ -719,4 +719,120 @@ defmodule PortalCms.Portal do
   def change_content_block(%ContentBlock{} = content_block, attrs \\ %{}) do
     ContentBlock.changeset(content_block, attrs)
   end
+
+  alias PortalCms.Portal.Permission
+
+  @doc """
+  Returns the list of permissions.
+
+  ## Examples
+
+      iex> list_permissions()
+      [%Permission{}, ...]
+
+  """
+  def list_permissions do
+    Repo.all(Permission)
+      |>Repo.preload(:feature)
+  end
+
+  def list_permissions(app_id) do
+
+    # app = from a in App, where: a.id == ^app_id, order_by: a.name
+
+    # features = from f in Feature, where: f.app_id == ^app.id
+
+   q=from p in "permissions",
+            join: f in "features", on: f.id == p.feature_id,
+            join: a in "apps", on: a.id == f.app_id,
+            where: a.id == 1,
+            order_by: p.name,
+            select: %{appName: a.name, permission: p.name,feature: f.name}
+            # select: [%{appName: a.name, name: p.name,features: %{name: f.name, permissions: []}}]
+    Repo.all(q)
+  end
+
+
+  @doc """
+  Gets a single permission.
+
+  Raises `Ecto.NoResultsError` if the Permission does not exist.
+
+  ## Examples
+
+      iex> get_permission!(123)
+      %Permission{}
+
+      iex> get_permission!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_permission!(id), do: Repo.get!(Permission, id)
+
+
+
+  @doc """
+  Creates a permission.
+
+  ## Examples
+
+      iex> create_permission(%{field: value})
+      {:ok, %Permission{}}
+
+      iex> create_permission(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_permission(attrs \\ %{}) do
+    %Permission{}
+    |> Permission.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a permission.
+
+  ## Examples
+
+      iex> update_permission(permission, %{field: new_value})
+      {:ok, %Permission{}}
+
+      iex> update_permission(permission, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_permission(%Permission{} = permission, attrs) do
+    permission
+    |> Permission.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a permission.
+
+  ## Examples
+
+      iex> delete_permission(permission)
+      {:ok, %Permission{}}
+
+      iex> delete_permission(permission)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_permission(%Permission{} = permission) do
+    Repo.delete(permission)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking permission changes.
+
+  ## Examples
+
+      iex> change_permission(permission)
+      %Ecto.Changeset{data: %Permission{}}
+
+  """
+  def change_permission(%Permission{} = permission, attrs \\ %{}) do
+    Permission.changeset(permission, attrs)
+  end
 end

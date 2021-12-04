@@ -1,0 +1,22 @@
+<h1>Show Permission</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, PortalCmsWeb.PermissionLive.FormComponent,
+    id: @permission.id,
+    title: @page_title,
+    action: @live_action,
+    permission: @permission,
+    return_to: Routes.permission_show_path(@socket, :show, @permission) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @permission.name %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.permission_show_path(@socket, :edit, @permission), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.permission_index_path(@socket, :index) %></span>

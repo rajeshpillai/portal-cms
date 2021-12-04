@@ -87,6 +87,14 @@ defmodule PortalCmsWeb.Router do
 
     # live "/content_blocks/:id", ContentBlockLive.Show, :show
     # live "/content_blocks/:id/show/edit", ContentBlockLive.Show, :edit
+
+    # permissions
+    live "/permissions", PermissionLive.Index, :index
+    live "/permissions/new", PermissionLive.Index, :new
+    live "/permissions/:id/edit", PermissionLive.Index, :edit
+
+    live "/permissions/:id", PermissionLive.Show, :show
+    live "/permissions/:id/show/edit", PermissionLive.Show, :edit
   end
 
   scope "/api", PortalCmsWeb do
@@ -96,6 +104,11 @@ defmodule PortalCmsWeb.Router do
     get "/page/:id", PortalController, :get_content_page
     get "/content/:id", PortalController, :get_content_block
     get "/roles/:app_id", PortalController, :get_roles
+    get "/features/:app_id", PortalController, :get_features
+
+    get "/permissions/:app_id", PortalController, :get_permissions_by_app
+
+    get "/apps", PortalController, :get_apps
   end
 
   # Other scopes may use custom stacks.

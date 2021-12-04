@@ -16,9 +16,11 @@ alias PortalCms.Portal.Navigation
 alias PortalCms.Portal.NavItem
 alias PortalCms.Portal.Feature
 alias PortalCms.Portal.Role
+alias PortalCms.Portal.Permission
 
 require Logger
 
+Repo.delete_all(Permission)
 Repo.delete_all(Feature)
 Repo.delete_all(Role)
 Repo.delete_all(NavItem)
@@ -59,25 +61,45 @@ Repo.insert! %NavItem{
 }
 
 # Feature seed data
-Repo.insert! %Feature{
-  name: "todo_create",
+
+todo_feature =Repo.insert!(%Feature{
+  name: "Todo",
   app_id: app.id
+},returning: [:id])
+
+comment_feature =Repo.insert!(%Feature{
+  name: "Comment",
+  app_id: app.id
+},returning: [:id])
+
+
+# Permission Seed data for features
+Repo.insert! %Permission{
+  name: "add",
+  feature_id: todo_feature.id
+}
+Repo.insert! %Permission{
+  name: "delete",
+  feature_id: todo_feature.id
 }
 
-Repo.insert! %Feature{
-  name: "todo_edit",
-  app_id: app.id
+# Comment
+Repo.insert! %Permission{
+  name: "addcomment",
+  feature_id: comment_feature.id
+}
+Repo.insert! %Permission{
+  name: "deletecomment",
+  feature_id: comment_feature.id
 }
 
-Repo.insert! %Feature{
-  name: "todo_delete",
-  app_id: app.id
+Repo.insert! %Permission{
+  name: "markascompleted",
+  feature_id: todo_feature.id
 }
 
-Repo.insert! %Feature{
-  name: "todo_mark_as_completed",
-  app_id: app.id
-}
+
+
 
 
 # Role seed data
@@ -92,12 +114,6 @@ Repo.insert! %Role{
 }
 
 Repo.insert! %Role{
-  name: "manager",
-  app_id: app.id
-}
-
-
-Repo.insert! %Role{
-  name: "super_admin",
+  name: "reviewer",
   app_id: app.id
 }
