@@ -23,4 +23,9 @@ defmodule PortalCmsWeb.PortalController do
 
     json(conn, %{data: content})
   end
+
+  def get_roles(conn, %{"app_id" => app_id})  do
+      roles = Portal.list_roles(app_id)
+      json(conn, %{data: roles})
+  end
 end
