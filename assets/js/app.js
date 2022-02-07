@@ -24,24 +24,15 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 const RichTextEditor = {
   mounted() {
     
-    console.log("Hooks mounted...");
-
-    tinymce.remove(`#${this.el.id}`);
-    tinymce.init({
-      selector: `#${this.el.id}`,
-      menubar: false,
-      height: 400
-    });
-
+    let targetId = `${this.el.id}`
+    console.log("Hooks mounted...", targetId);
+    this.rich = new SimpleMDE({ element: document.getElementById(targetId) });
   },
 
   updated(){
-    console.log("Hooks updated...");
-
-    tinymce.init({
-      selector: `#${this.el.id}`,
-      menubar: false
-    });
+    let targetId = `${this.el.id}`
+    console.log("Hooks updated...", targetId, this.rich);
+    new SimpleMDE({ element: document.getElementById(targetId) });
   }
 }
 
