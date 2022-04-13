@@ -8,6 +8,7 @@ defmodule PortalCms.Portal.Permission do
     field :name, :string
     #  field :feature_id, :id
     belongs_to :feature, PortalCms.Portal.Feature
+    belongs_to :users, PortalCms.Accounts.User, foreign_key: :user_id
 
     timestamps()
   end
@@ -15,7 +16,7 @@ defmodule PortalCms.Portal.Permission do
   @doc false
   def changeset(permission, attrs) do
     permission
-    |> cast(attrs, [:name,:feature_id])
+    |> cast(attrs, [:name,:feature_id,:user_id])
     |> validate_required([:name])
   end
 end
