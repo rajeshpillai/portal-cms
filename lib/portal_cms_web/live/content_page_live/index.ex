@@ -1,31 +1,33 @@
 defmodule PortalCmsWeb.ContentPageLive.Index do
   use PortalCmsWeb, :live_view
+  alias Earmark.Options
 
   alias PortalCms.Portal
   alias PortalCms.Portal.ContentPage
 
   @impl true
   def mount(%{"app_id" => app_id} = params, _session, socket) do
-    IO.puts "MOUNT: "
-    IO.inspect params
+    IO.puts("MOUNT: ")
+    IO.inspect(params)
     app = Portal.get_app!(app_id)
-    socket = socket
-        |> assign(:content_pages, list_content_pages(app.id))
-        |> assign(:app, app)
+
+    socket =
+      socket
+      |> assign(:content_pages, list_content_pages(app.id))
+      |> assign(:app, app)
 
     {:ok, socket}
-
   end
 
   @impl true
   def handle_params(%{"app_id" => app_id} = params, _url, socket) do
     IO.puts("Content Pages: #{app_id} ==> ")
-    IO.inspect params
+    IO.inspect(params)
     app = Portal.get_app!(app_id)
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id, "app_id" => app_id} ) do
+  defp apply_action(socket, :edit, %{"id" => id, "app_id" => app_id}) do
     app = Portal.get_app!(app_id)
 
     socket
@@ -40,8 +42,7 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
     # changeset = Portal.change_nav_item(%NavItem{}, %{navigation_id: id})
 
     content_page = Ecto.build_assoc(app, :content_page, %ContentPage{})
-    IO.inspect content_page
-
+    IO.inspect(content_page)
 
     socket
     |> assign(:page_title, "New Content page")
@@ -50,9 +51,9 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
     |> assign(:app, app)
   end
 
-  defp apply_action(socket, :index,  %{"app_id" => id}) do
+  defp apply_action(socket, :index, %{"app_id" => id}) do
     app = Portal.get_app!(id)
-    IO.inspect app
+    IO.inspect(app)
 
     socket
     |> assign(:page_title, "Listing Content pages")
@@ -70,5 +71,11 @@ defmodule PortalCmsWeb.ContentPageLive.Index do
 
   defp list_content_pages(app_id) do
     Portal.list_content_pages(app_id)
+  end
+
+  def as_html(txt) do
+    txt
+    |> Earmark.as_html!(%Options{smartypants: false})
+    |> raw
   end
 end

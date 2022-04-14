@@ -49,7 +49,8 @@ defmodule PortalCms.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:corsica, "~> 1.0"},
-      {:phx_gen_auth, "~> 0.6", only: [:dev], runtime: false}
+      {:phx_gen_auth, "~> 0.6", only: [:dev], runtime: false},
+      {:earmark, "~> 1.4.24"}
     ]
   end
 
