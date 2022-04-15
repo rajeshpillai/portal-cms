@@ -1,0 +1,25 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "user_role-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= hidden_input f, :app_id %>
+
+  <%= label f, :user_id %>
+  <%= select f, :user_id, @users %>
+
+  <%= label f, :role_id %>
+  <div>
+    <%= for role <- @roles do %>
+      <div style="border: 1px solid skyblue;margin:5px;padding:5px">
+        <input name="user_role[role_id]" type="checkbox" value="<%= role.id %>">
+        <%= role.name %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>
