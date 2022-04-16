@@ -17,6 +17,7 @@ defmodule PortalCms.Accounts.User do
     has_many :navigations, PortalCms.Portal.Navigation
     has_many :permissions, PortalCms.Portal.Permission
     has_many :roles, PortalCms.Portal.Role
+    has_many :user_roles, PortalCms.Portal.UserRole
 
     timestamps()
   end

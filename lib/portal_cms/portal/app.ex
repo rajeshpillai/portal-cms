@@ -11,7 +11,8 @@ defmodule PortalCms.Portal.App do
     has_many :features, PortalCms.Portal.Feature
     has_many :roles, PortalCms.Portal.Role
     has_many :content_block, PortalCms.Portal.ContentBlock
-    belongs_to :users, PortalCms.Accounts.User, foreign_key: :user_id
+    has_many :user_role, PortalCms.Portal.UserRole
+    belongs_to :user, PortalCms.Accounts.User, foreign_key: :user_id
 
     timestamps()
   end

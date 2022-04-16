@@ -35,7 +35,7 @@ defmodule PortalCms.Portal do
       ** (Ecto.NoResultsError)
 
   """
-  def get_app!(id)  do
+  def get_app!(id) do
     IO.puts("Fetching app for ID #{id}")
     Repo.get!(App, id)
   end
@@ -138,7 +138,7 @@ defmodule PortalCms.Portal do
 
   def get_navigation_with_app!(id) do
     Repo.get!(Navigation, id)
-      |> Repo.preload(:app)
+    |> Repo.preload(:app)
   end
 
   @doc """
@@ -224,9 +224,7 @@ defmodule PortalCms.Portal do
   def list_nav_items(nav_id) do
     q = from p in NavItem, where: p.navigation_id == ^nav_id, order_by: p.seq_no
     Repo.all(q)
-
   end
-
 
   @doc """
   Gets a single nav_item.
@@ -257,7 +255,7 @@ defmodule PortalCms.Portal do
 
   """
   def create_nav_item(attrs \\ %{}) do
-    IO.inspect( attrs )
+    IO.inspect(attrs)
 
     %NavItem{}
     |> NavItem.changeset(attrs)
@@ -311,7 +309,6 @@ defmodule PortalCms.Portal do
     NavItem.changeset(nav_item, attrs)
   end
 
-
   alias PortalCms.Portal.ContentPage
 
   @doc """
@@ -331,8 +328,6 @@ defmodule PortalCms.Portal do
     q = from p in ContentPage, where: p.app_id == ^app_id
     Repo.all(q)
   end
-
-
 
   @doc """
   Gets a single content_page.
@@ -434,7 +429,6 @@ defmodule PortalCms.Portal do
     q = from p in Feature, where: p.app_id == ^app_id
     Repo.all(q)
   end
-
 
   @doc """
   Gets a single feature.
@@ -633,7 +627,6 @@ defmodule PortalCms.Portal do
     Repo.all(ContentBlock)
   end
 
-
   def list_content_blocks(app_id) do
     q = from p in ContentBlock, where: p.app_id == ^app_id
     Repo.all(q)
@@ -733,25 +726,27 @@ defmodule PortalCms.Portal do
   """
   def list_permissions do
     Repo.all(Permission)
-      |>Repo.preload(:feature)
+    |> Repo.preload(:feature)
   end
 
-  def list_permissions(app_id) do
-
+  def list_permissions(_app_id) do
     # app = from a in App, where: a.id == ^app_id, order_by: a.name
 
     # features = from f in Feature, where: f.app_id == ^app.id
 
-   q=from p in "permissions",
-            join: f in "features", on: f.id == p.feature_id,
-            join: a in "apps", on: a.id == f.app_id,
-            where: a.id == 1,
-            order_by: p.name,
-            select: %{appName: a.name, permission: p.name,feature: f.name}
-            # select: [%{appName: a.name, name: p.name,features: %{name: f.name, permissions: []}}]
+    q =
+      from p in "permissions",
+        join: f in "features",
+        on: f.id == p.feature_id,
+        join: a in "apps",
+        on: a.id == f.app_id,
+        where: a.id == 1,
+        order_by: p.name,
+        select: %{appName: a.name, permission: p.name, feature: f.name}
+
+    # select: [%{appName: a.name, name: p.name,features: %{name: f.name, permissions: []}}]
     Repo.all(q)
   end
-
 
   @doc """
   Gets a single permission.
@@ -768,8 +763,6 @@ defmodule PortalCms.Portal do
 
   """
   def get_permission!(id), do: Repo.get!(Permission, id)
-
-
 
   @doc """
   Creates a permission.
@@ -834,5 +827,101 @@ defmodule PortalCms.Portal do
   """
   def change_permission(%Permission{} = permission, attrs \\ %{}) do
     Permission.changeset(permission, attrs)
+  end
+
+  alias PortalCms.Portal.UserRole
+
+  @doc """
+  Returns the list of userroles.
+
+  ## Examples
+
+      iex> list_userroles()
+      [%UserRole{}, ...]
+
+  """
+  def list_userroles do
+    Repo.all(UserRole)
+  end
+
+  @doc """
+  Gets a single user_role.
+
+  Raises `Ecto.NoResultsError` if the User role does not exist.
+
+  ## Examples
+
+      iex> get_user_role!(123)
+      %UserRole{}
+
+      iex> get_user_role!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user_role!(id), do: Repo.get!(UserRole, id)
+
+  @doc """
+  Creates a user_role.
+
+  ## Examples
+
+      iex> create_user_role(%{field: value})
+      {:ok, %UserRole{}}
+
+      iex> create_user_role(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_user_role(attrs \\ %{}) do
+    %UserRole{}
+    |> UserRole.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a user_role.
+
+  ## Examples
+
+      iex> update_user_role(user_role, %{field: new_value})
+      {:ok, %UserRole{}}
+
+      iex> update_user_role(user_role, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_user_role(%UserRole{} = user_role, attrs) do
+    user_role
+    |> UserRole.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a user_role.
+
+  ## Examples
+
+      iex> delete_user_role(user_role)
+      {:ok, %UserRole{}}
+
+      iex> delete_user_role(user_role)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_user_role(%UserRole{} = user_role) do
+    Repo.delete(user_role)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking user_role changes.
+
+  ## Examples
+
+      iex> change_user_role(user_role)
+      %Ecto.Changeset{data: %UserRole{}}
+
+  """
+  def change_user_role(%UserRole{} = user_role, attrs \\ %{}) do
+    UserRole.changeset(user_role, attrs)
   end
 end

@@ -1,0 +1,35 @@
+<h1>Listing Userroles</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, PortalCmsWeb.UserRoleLive.FormComponent,
+    id: @user_role.id || :new,
+    title: @page_title,
+    action: @live_action,
+    user_role: @user_role,
+    roles: @appRoles,
+    users: @users,
+    return_to: Routes.user_role_index_path(@socket, :index, @app) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="userroles">
+    <%= for user_role <- @userroles do %>
+      <tr id="user_role-<%= user_role.id %>">
+        <td><%= user_role.user_id %></td>
+        <td>
+
+          <span><%= live_patch "Edit", to: Routes.user_role_index_path(@socket, :edit, user_role) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: user_role.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New User role", to: Routes.user_role_index_path(@socket, :new, @app) %></span>

@@ -88,7 +88,7 @@ defmodule PortalCmsWeb.Router do
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
 
-    # Access this pages after login only
+    # Access this routes after login only
     live "/apps", AppLive.Index, :index
     live "/apps/new", AppLive.Index, :new
     live "/apps/:id/edit", AppLive.Index, :edit
@@ -154,6 +154,21 @@ defmodule PortalCmsWeb.Router do
 
     live "/permissions/:id", PermissionLive.Show, :show
     live "/permissions/:id/show/edit", PermissionLive.Show, :edit
+
+    # Default genrated userroles routes
+
+    # live "/userroles", UserRoleLive.Index, :index
+    # live "/userroles/new", UserRoleLive.Index, :new
+    # live "/userroles/:id/edit", UserRoleLive.Index, :edit
+
+    # live "/userroles/:id", UserRoleLive.Show, :show
+    # live "/userroles/:id/show/edit", UserRoleLive.Show, :edit
+
+    # New routes
+    live "/userroles/:app_id", UserRoleLive.Index, :index
+    live "/userroles/:app_id/new", UserRoleLive.Index, :new
+    live "/userroles/:id/edit", UserRoleLive.Index, :edit
+
   end
 
   scope "/", PortalCmsWeb do
