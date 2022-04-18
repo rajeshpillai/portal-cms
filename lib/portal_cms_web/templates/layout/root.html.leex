@@ -32,7 +32,8 @@
               <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "nav-link" %>
             </li>
           <% end %>
-      </ul>
+        </ul>
+        <%= render "_user_menu.html", assigns %>
       </nav>
     </header>
   <%= @inner_content %>

@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :portal_cms, PortalCms.Repo,
   username: "postgres",
-  password: "root123",
+  password: "root",
   database: "portal_cms_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

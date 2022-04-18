@@ -11,6 +11,7 @@ defmodule PortalCms.Portal.ContentBlock do
     field :slug, :string
     # field :app_id, :id
     belongs_to  :app, PortalCms.Portal.App
+    belongs_to :users, PortalCms.Accounts.User, foreign_key: :user_id
 
     timestamps()
   end
@@ -18,7 +19,7 @@ defmodule PortalCms.Portal.ContentBlock do
   @doc false
   def changeset(content_block, attrs) do
     content_block
-    |> cast(attrs, [:content, :is_published, :type, :slug, :app_id])
+    |> cast(attrs, [:content, :is_published, :type, :slug, :app_id,:user_id])
     |> validate_required([:content, :is_published, :slug, :type])
     |> unique_constraint(:slug)
   end

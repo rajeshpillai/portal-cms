@@ -6,7 +6,8 @@ defmodule PortalCms.Portal.Role do
 
   schema "roles" do
     field :name, :string
-    belongs_to  :app, PortalCms.Portal.App
+    belongs_to :app, PortalCms.Portal.App
+    belongs_to :users, PortalCms.Accounts.User, foreign_key: :user_id
 
     timestamps()
   end
@@ -14,7 +15,7 @@ defmodule PortalCms.Portal.Role do
   @doc false
   def changeset(role, attrs) do
     role
-    |> cast(attrs, [:name, :app_id])
+    |> cast(attrs, [:name, :app_id, :user_id])
     |> validate_required([:name])
   end
 end

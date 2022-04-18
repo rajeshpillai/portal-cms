@@ -11,6 +11,8 @@ defmodule PortalCms.Portal.App do
     has_many :features, PortalCms.Portal.Feature
     has_many :roles, PortalCms.Portal.Role
     has_many :content_block, PortalCms.Portal.ContentBlock
+    has_many :user_role, PortalCms.Portal.UserRole
+    belongs_to :user, PortalCms.Accounts.User, foreign_key: :user_id
 
     timestamps()
   end
@@ -18,7 +20,7 @@ defmodule PortalCms.Portal.App do
   @doc false
   def changeset(app, attrs) do
     app
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name,:user_id])
     |> validate_required([:name])
   end
 end

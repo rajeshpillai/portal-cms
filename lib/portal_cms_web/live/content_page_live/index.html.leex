@@ -24,7 +24,7 @@
   <tbody id="content_pages">
     <%= for content_page <- @content_pages do %>
       <tr id="content_page-<%= content_page.id %>">
-        <td><%= content_page.content %></td>
+        <td><%= as_html(content_page.content) %></td>
         <td><%= content_page.slug %></td>
         <td><%= content_page.title %></td>
         <td><%= content_page.is_published %></td>
