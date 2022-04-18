@@ -54,7 +54,7 @@ defmodule PortalCms.Portal do
   """
   def create_app(attrs \\ %{}) do
     %App{}
-    |> App.changeset(attrs)
+    |> App.create_changeset(attrs)
     |> Repo.insert()
   end
 
