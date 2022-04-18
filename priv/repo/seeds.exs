@@ -17,6 +17,7 @@ alias PortalCms.Portal.NavItem
 alias PortalCms.Portal.Feature
 alias PortalCms.Portal.Role
 alias PortalCms.Portal.Permission
+alias PortalCms.Accounts.User
 
 require Logger
 
@@ -27,93 +28,119 @@ Repo.delete_all(NavItem)
 Repo.delete_all(Navigation)
 Repo.delete_all(App)
 
-app =Repo.insert!(%App{
-  name: "Tasky",
-},returning: [:id])
+# users password:- algo@1234567
+user =
+  Repo.insert!(
+    %User{
+      email: "Test@gmail.com",
+      hashed_password: "$2b$12$/7pgnNn2Pwqti0KYVn886O406dRxjvHbsxXQZ8oEKoBw114wURFqO"
+    },
+    returning: [:id]
+  )
+
+IO.inspect(user.id, label: "user.id")
+
+# apps
+app =
+  Repo.insert!(
+    %App{
+      name: "Tasky",
+      user_id: user.id
+    },
+    returning: [:id]
+  )
 
 IO.inspect(app.id)
 
-nav_result = Repo.insert!(%Navigation{
-  name: "MainNav",
-  app_id: app.id,
-}, returning: [:id])
+nav_result =
+  Repo.insert!(
+    %Navigation{
+      name: "MainNav",
+      app_id: app.id
+    },
+    returning: [:id]
+  )
 
-
-Repo.insert! %NavItem{
+Repo.insert!(%NavItem{
   title: "Menu 1",
   url: "Url 1",
   seq_no: 1,
   navigation_id: nav_result.id
-}
+})
 
-Repo.insert! %NavItem{
+Repo.insert!(%NavItem{
   title: "Menu 2",
   url: "Url 2",
   seq_no: 2,
   navigation_id: nav_result.id
-}
+})
 
-Repo.insert! %NavItem{
+Repo.insert!(%NavItem{
   title: "Menu 3",
   url: "Url 3",
   seq_no: 3,
   navigation_id: nav_result.id
-}
+})
 
 # Feature seed data
 
-todo_feature =Repo.insert!(%Feature{
-  name: "Todo",
-  app_id: app.id
-},returning: [:id])
+todo_feature =
+  Repo.insert!(
+    %Feature{
+      name: "Todo",
+      app_id: app.id
+    },
+    returning: [:id]
+  )
 
-comment_feature =Repo.insert!(%Feature{
-  name: "Comment",
-  app_id: app.id
-},returning: [:id])
-
+comment_feature =
+  Repo.insert!(
+    %Feature{
+      name: "Comment",
+      app_id: app.id
+    },
+    returning: [:id]
+  )
 
 # Permission Seed data for features
-Repo.insert! %Permission{
+Repo.insert!(%Permission{
   name: "add",
   feature_id: todo_feature.id
-}
-Repo.insert! %Permission{
+})
+
+Repo.insert!(%Permission{
   name: "delete",
   feature_id: todo_feature.id
-}
+})
 
 # Comment
-Repo.insert! %Permission{
+Repo.insert!(%Permission{
   name: "addcomment",
   feature_id: comment_feature.id
-}
-Repo.insert! %Permission{
+})
+
+Repo.insert!(%Permission{
   name: "deletecomment",
   feature_id: comment_feature.id
-}
+})
 
-Repo.insert! %Permission{
+Repo.insert!(%Permission{
   name: "markascompleted",
   feature_id: todo_feature.id
-}
-
-
-
-
+})
 
 # Role seed data
-Repo.insert! %Role{
+Repo.insert!(%Role{
   name: "user",
   app_id: app.id
-}
+})
 
-Repo.insert! %Role{
+Repo.insert!(%Role{
   name: "admin",
   app_id: app.id
-}
+})
 
-Repo.insert! %Role{
+Repo.insert!(%Role{
   name: "reviewer",
   app_id: app.id
-}
+})
