@@ -5,23 +5,21 @@ defmodule PortalCms.Portal.Navigation do
   schema "navigations" do
     field :name, :string
     # field :app_id, :id
-    belongs_to  :app, PortalCms.Portal.App
+    belongs_to :app, PortalCms.Portal.App
     belongs_to :users, PortalCms.Accounts.User, foreign_key: :user_id
     timestamps()
   end
 
-  @spec changeset(
-          {map, map}
-          | %{
-              :__struct__ => atom | %{:__changeset__ => map, optional(any) => any},
-              optional(atom) => any
-            },
-          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
-        ) :: Ecto.Changeset.t()
+  def create_changeset(navigation, attrs) do
+    navigation
+    |> cast(attrs, [:name, :user_id])
+    |> validate_required([:name, :user_id])
+  end
+
   @doc false
   def changeset(navigation, attrs) do
     navigation
-    |> cast(attrs, [:name,:user_id])
+    |> cast(attrs, [:name, :user_id])
     |> validate_required([:name])
   end
 end

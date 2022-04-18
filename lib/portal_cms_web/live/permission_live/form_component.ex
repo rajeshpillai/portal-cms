@@ -41,6 +41,9 @@ defmodule PortalCmsWeb.PermissionLive.FormComponent do
   end
 
   defp save_permission(socket, :new, permission_params) do
+    current_user = socket.assigns.current_user
+    permission_params = Map.put(permission_params, "user_id", current_user.id)
+
     case Portal.create_permission(permission_params) do
       {:ok, _permission} ->
         {:noreply,

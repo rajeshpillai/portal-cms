@@ -5,8 +5,8 @@ defmodule PortalCmsWeb.RoleLive.Index do
   alias PortalCms.Portal.Role
 
   @impl true
-  def mount(%{"app_id" => app_id}, _session, socket) do
-
+  def mount(%{"app_id" => app_id}, session, socket) do
+    socket = assign_defaults(session, socket)
     {:ok, assign(socket, :roles, list_roles(app_id))}
   end
 
@@ -26,7 +26,6 @@ defmodule PortalCmsWeb.RoleLive.Index do
 
     changeset = Ecto.build_assoc(app, :roles, %Role{})
 
-
     socket
     |> assign(:page_title, "New Role")
     |> assign(:role, changeset)
@@ -34,9 +33,8 @@ defmodule PortalCmsWeb.RoleLive.Index do
   end
 
   defp apply_action(socket, :index, %{"app_id" => app_id}) do
-    IO.puts("***APP_ID: #{app_id}")
     app = Portal.get_app!(app_id)
-    IO.inspect app
+
     socket
     |> assign(:page_title, "Listing Roles")
     |> assign(:role, nil)
