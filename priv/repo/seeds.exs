@@ -56,7 +56,8 @@ nav_result =
   Repo.insert!(
     %Navigation{
       name: "MainNav",
-      app_id: app.id
+      app_id: app.id,
+      user_id: user.id
     },
     returning: [:id]
   )
@@ -65,21 +66,24 @@ Repo.insert!(%NavItem{
   title: "Menu 1",
   url: "Url 1",
   seq_no: 1,
-  navigation_id: nav_result.id
+  navigation_id: nav_result.id,
+  user_id: user.id
 })
 
 Repo.insert!(%NavItem{
   title: "Menu 2",
   url: "Url 2",
   seq_no: 2,
-  navigation_id: nav_result.id
+  navigation_id: nav_result.id,
+  user_id: user.id
 })
 
 Repo.insert!(%NavItem{
   title: "Menu 3",
   url: "Url 3",
   seq_no: 3,
-  navigation_id: nav_result.id
+  navigation_id: nav_result.id,
+  user_id: user.id
 })
 
 # Feature seed data
@@ -88,7 +92,8 @@ todo_feature =
   Repo.insert!(
     %Feature{
       name: "Todo",
-      app_id: app.id
+      app_id: app.id,
+      user_id: user.id
     },
     returning: [:id]
   )
@@ -97,7 +102,8 @@ comment_feature =
   Repo.insert!(
     %Feature{
       name: "Comment",
-      app_id: app.id
+      app_id: app.id,
+      user_id: user.id
     },
     returning: [:id]
   )
@@ -105,42 +111,50 @@ comment_feature =
 # Permission Seed data for features
 Repo.insert!(%Permission{
   name: "add",
-  feature_id: todo_feature.id
+  feature_id: todo_feature.id,
+  user_id: user.id
 })
 
 Repo.insert!(%Permission{
   name: "delete",
-  feature_id: todo_feature.id
+  feature_id: todo_feature.id,
+  user_id: user.id
 })
 
 # Comment
 Repo.insert!(%Permission{
   name: "addcomment",
-  feature_id: comment_feature.id
+  feature_id: comment_feature.id,
+  user_id: user.id
 })
 
 Repo.insert!(%Permission{
   name: "deletecomment",
-  feature_id: comment_feature.id
+  feature_id: comment_feature.id,
+  user_id: user.id
 })
 
 Repo.insert!(%Permission{
   name: "markascompleted",
-  feature_id: todo_feature.id
+  feature_id: todo_feature.id,
+  user_id: user.id
 })
 
 # Role seed data
 Repo.insert!(%Role{
   name: "user",
-  app_id: app.id
+  app_id: app.id,
+  user_id: user.id
 })
 
 Repo.insert!(%Role{
   name: "admin",
-  app_id: app.id
+  app_id: app.id,
+  user_id: user.id
 })
 
 Repo.insert!(%Role{
   name: "reviewer",
-  app_id: app.id
+  app_id: app.id,
+  user_id: user.id
 })
