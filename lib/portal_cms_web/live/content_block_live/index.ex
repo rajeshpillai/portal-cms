@@ -5,7 +5,8 @@ defmodule PortalCmsWeb.ContentBlockLive.Index do
   alias PortalCms.Portal.ContentBlock
 
   @impl true
-  def mount(%{"app_id" => app_id} = params, _session, socket) do
+  def mount(%{"app_id" => app_id} = params, session, socket) do
+    socket = assign_defaults(session, socket)
     app = Portal.get_app!(app_id)
     socket = socket
         |> assign(:content_blocks, list_content_blocks(app.id))

@@ -41,6 +41,9 @@ defmodule PortalCmsWeb.RoleLive.FormComponent do
   end
 
   defp save_role(socket, :new, role_params) do
+    current_user = socket.assigns.current_user
+    role_params = Map.put(role_params, "user_id", current_user.id)
+
     case Portal.create_role(role_params) do
       {:ok, _role} ->
         {:noreply,

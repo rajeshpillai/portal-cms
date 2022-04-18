@@ -17,6 +17,13 @@ defmodule PortalCms.Portal.ContentPage do
     timestamps()
   end
 
+  def create_changeset(content_page, attrs) do
+    content_page
+    |> cast(attrs, [:id, :content, :slug, :title, :is_published, :app_id, :user_id])
+    |> validate_required([:content, :slug, :title, :is_published, :user_id])
+    |> unique_constraint(:slug)
+  end
+
   @doc false
   def changeset(content_page, attrs) do
     content_page

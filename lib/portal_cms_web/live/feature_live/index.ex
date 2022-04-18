@@ -5,8 +5,8 @@ defmodule PortalCmsWeb.FeatureLive.Index do
   alias PortalCms.Portal.Feature
 
   @impl true
-  def mount(%{"app_id" => app_id}, _session, socket) do
-
+  def mount(%{"app_id" => app_id}, session, socket) do
+    socket = assign_defaults(session, socket)
     {:ok, assign(socket, :features, list_features(app_id))}
   end
 
@@ -26,7 +26,6 @@ defmodule PortalCmsWeb.FeatureLive.Index do
 
     changeset = Ecto.build_assoc(app, :features, %Feature{})
 
-
     socket
     |> assign(:page_title, "New Feature")
     |> assign(:feature, changeset)
@@ -34,9 +33,8 @@ defmodule PortalCmsWeb.FeatureLive.Index do
   end
 
   defp apply_action(socket, :index, %{"app_id" => app_id}) do
-    IO.puts("***APP_ID: #{app_id}")
     app = Portal.get_app!(app_id)
-    IO.inspect app
+
     socket
     |> assign(:page_title, "Listing Features")
     |> assign(:feature, nil)
