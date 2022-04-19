@@ -13,7 +13,7 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
 
     socket =
       socket
-      |> assign(:userroles, list_userroles())
+      |> assign(:userroles, list_userroles(app_id))
       |> assign(:app, app)
 
     {:ok, socket}
@@ -74,10 +74,20 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
     user_role = Portal.get_user_role!(id)
     {:ok, _} = Portal.delete_user_role(user_role)
 
-    {:noreply, assign(socket, :userroles, list_userroles())}
+    {:noreply, assign(socket, :userroles, list_userroles(user_role.app_id))}
   end
 
-  defp list_userroles do
-    Portal.list_userroles()
+  defp list_userroles(app_id) do
+    Portal.list_userroles(app_id)
+  end
+
+  defp findUsernameByUserId(user_id) do
+    user = Repo.get!(PortalCms.Accounts.User, user_id)
+    user.email
+  end
+
+  defp findRolenameByRoleId(role_id) do
+    role = Repo.get!(PortalCms.Portal.Role, role_id)
+    role.name
   end
 end

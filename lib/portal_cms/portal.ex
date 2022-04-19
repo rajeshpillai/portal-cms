@@ -844,6 +844,11 @@ defmodule PortalCms.Portal do
     Repo.all(UserRole)
   end
 
+  def list_userroles(app_id) do
+    q = from u in UserRole, where: u.app_id == ^app_id
+    Repo.all(q)
+  end
+
   @doc """
   Gets a single user_role.
 
