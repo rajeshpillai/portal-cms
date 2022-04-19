@@ -13,8 +13,13 @@
   <%= label f, :role_id %>
   <div>
     <%= for role <- @roles do %>
+      <%= if Enum.member?(@existRoles,role.id) do %>
+        <input type="checkbox" name="user_role[role_id][]" checked value="<%= role.id %>" class="form-check-input" >
+        <%= role.name %>
+      <% else %>
         <input type="checkbox" name="user_role[role_id][]" value="<%= role.id %>" class="form-check-input" >
         <%= role.name %>
+      <% end %>
     <% end %>
   </div>
 
