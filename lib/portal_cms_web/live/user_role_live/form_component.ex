@@ -44,10 +44,12 @@ defmodule PortalCmsWeb.UserRoleLive.FormComponent do
       Repo.delete_all(query)
     end
 
-    for role_id <- user_role_params["role_id"] do
-      user_role_params = Map.delete(user_role_params, "role_id")
-      user_role_params = Map.put(user_role_params, "role_id", role_id)
-      save_user_role(socket, socket.assigns.action, user_role_params)
+    if user_role_params["role_id"] do
+      for role_id <- user_role_params["role_id"] do
+        user_role_params = Map.delete(user_role_params, "role_id")
+        user_role_params = Map.put(user_role_params, "role_id", role_id)
+        save_user_role(socket, socket.assigns.action, user_role_params)
+      end
     end
 
     if socket.assigns.action == :new do
