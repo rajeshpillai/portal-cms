@@ -37,7 +37,9 @@
       <%= id %>: "<%= Routes.user_role_index_path(@socket, :new, @app, user_id: id) %>",
     <% end %>
   }
+</script>
 
+<script>
   function val() {
     var roleId = document.getElementById("user_role-form_user_id").value;
     console.log("roleId:",roleId)
