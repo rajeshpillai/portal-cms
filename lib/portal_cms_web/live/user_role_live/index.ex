@@ -9,14 +9,7 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
 
   @impl true
   def mount(%{"app_id" => app_id}, _session, socket) do
-    app = Portal.get_app!(app_id)
-
-    socket =
-      socket
-      |> assign(:userroles, list_userroles(app_id))
-      |> assign(:app, app)
-
-    {:ok, socket}
+    {:ok, assign(socket, :userroles, list_userroles(app_id))}
   end
 
   @impl true
@@ -24,17 +17,32 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
+  defp apply_action(socket, :edit, %{"id" => id, "app_id" => app_id}) do
+    app = Portal.get_app!(app_id)
+    appRole = Portal.get_app!(app_id) |> Repo.preload([:roles])
+
+    usersList = Repo.all(PortalCms.Accounts.User)
+    users = Enum.map(usersList, &{"#{&1.email}", &1.id})
+
+    userRole = Portal.get_user_role!(id)
+
+    query =
+      from u in PortalCms.Portal.UserRole,
+        where:
+          u.user_id == type(^userRole.user_id, :integer) and u.app_id == type(^app_id, :integer),
+        select: u.role_id
+
+    existRoles = Repo.all(query)
+
     socket
     |> assign(:page_title, "Edit User role")
-    |> assign(:user_role, Portal.get_user_role!(id))
+    |> assign(:user_role, userRole)
+    |> assign(:existRoles, existRoles)
+    |> assign(:app, app)
+    |> assign(:appRoles, appRole.roles)
+    |> assign(:users, users)
+    |> assign(:actions, "edit")
   end
-
-  # defp apply_action(socket, :new, _params) do
-  #   socket
-  #   |> assign(:page_title, "New User role")
-  #   |> assign(:user_role, %UserRole{})
-  # end
 
   defp apply_action(socket, :new, %{"app_id" => app_id}) do
     app = Portal.get_app!(app_id)
@@ -59,14 +67,16 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
     |> assign(:appRoles, appRole.roles)
     |> assign(:users, users)
     |> assign(:existRoles, existRoles)
-
-    # |> IO.inspect(label: "user_role_page")
+    |> assign(:actions, "new")
   end
 
-  defp apply_action(socket, :index, _params) do
+  defp apply_action(socket, :index, %{"app_id" => app_id}) do
+    app = Portal.get_app!(app_id)
+
     socket
     |> assign(:page_title, "Listing Userroles")
     |> assign(:user_role, nil)
+    |> assign(:app, app)
   end
 
   @impl true

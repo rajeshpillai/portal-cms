@@ -26,8 +26,6 @@ defmodule PortalCmsWeb.UserRoleLive.FormComponent do
   end
 
   def handle_event("save", %{"user_role" => user_role_params}, socket) do
-    IO.inspect(user_role_params, label: "user_role_params")
-
     isUserAppExist =
       Repo.exists?(
         from d in PortalCms.Portal.UserRole,
@@ -66,28 +64,20 @@ defmodule PortalCmsWeb.UserRoleLive.FormComponent do
   end
 
   defp save_user_role(socket, :edit, user_role_params) do
-    case Portal.update_user_role(socket.assigns.user_role, user_role_params) do
-      {:ok, _user_role} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "User role updated successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, :changeset, changeset)}
-    end
+    data_update(socket, user_role_params)
   end
 
   defp save_user_role(socket, :new, user_role_params) do
+    data_update(socket, user_role_params)
+  end
+
+  defp data_update(socket, user_role_params) do
     case Portal.create_user_role(user_role_params) do
       {:ok, _user_role} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "User role created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+        {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+        {:noreply, assign(socket, :changeset, changeset)}
     end
   end
 end

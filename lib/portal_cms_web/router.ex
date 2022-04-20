@@ -165,10 +165,9 @@ defmodule PortalCmsWeb.Router do
     # live "/userroles/:id/show/edit", UserRoleLive.Show, :edit
 
     # New routes
-    live "/userroles/:app_id", UserRoleLive.Index, :index
-    live "/userroles/:app_id/new", UserRoleLive.Index, :new
-    live "/userroles/:id/edit", UserRoleLive.Index, :edit
-
+    live "/app/:app_id/userroles", UserRoleLive.Index, :index
+    live "/app/:app_id/userroles/new", UserRoleLive.Index, :new
+    live "/app/:app_id/userroles/:id/edit", UserRoleLive.Index, :edit
   end
 
   scope "/", PortalCmsWeb do
