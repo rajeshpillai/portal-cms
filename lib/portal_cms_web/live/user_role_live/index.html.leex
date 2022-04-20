@@ -9,6 +9,7 @@
     roles: @appRoles,
     users: @users,
     existRoles: @existRoles,
+    actions: @actions,
     return_to: Routes.user_role_index_path(@socket, :index, @app) %>
 <% end %>
 
@@ -29,8 +30,8 @@
         <td><%= findUsernameByUserId(user_role.user_id) %></td>
         <td><%= findRolenameByRoleId(user_role.role_id) %></td>
         <td>
-          <span><%= live_patch "Edit", to: Routes.user_role_index_path(@socket, :edit, user_role), class: "btn btn-warning" %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: user_role.id, data: [confirm: "Are you sure?"], class: "btn btn-danger" %></span>
+          <span><%= live_patch "Edit", to: Routes.user_role_index_path(@socket, :edit, @app, user_role), class: "btn btn-warning btn-sm" %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: user_role.id, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-sm" %></span>
         </td>
       </tr>
     <% end %>

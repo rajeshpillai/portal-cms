@@ -8,7 +8,12 @@
   <%= hidden_input f, :app_id %>
 
   <%= label f, :user_id %>
-  <%= select f, :user_id, @users, class: "form-select form-select-sm" %>
+  <%= if @actions == "new" do %>
+    <%= select f, :user_id, @users, class: "form-select form-select-sm" %>
+  <% else %>
+    <%= hidden_input f, :user_id %>
+    <%= select f, :user_id, @users, class: "form-select form-select-sm", disabled: true %>
+  <% end %>
 
   <%= label f, :role_id %>
   <div>
