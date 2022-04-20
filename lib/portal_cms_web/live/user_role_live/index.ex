@@ -23,6 +23,7 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
 
     usersList = Repo.all(PortalCms.Accounts.User)
     users = Enum.map(usersList, &{"#{&1.email}", &1.id})
+    userIds = Enum.map(usersList, & &1.id)
 
     userRole = Portal.get_user_role!(id)
 
@@ -42,23 +43,29 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
     |> assign(:appRoles, appRole.roles)
     |> assign(:users, users)
     |> assign(:actions, "edit")
+    |> assign(:user_id, userRole.user_id)
+    |> assign(:userIds, userIds)
   end
 
-  defp apply_action(socket, :new, %{"app_id" => app_id}) do
+  defp apply_action(socket, :new, params) do
+    app_id = params["app_id"]
+    user_id = params["user_id"] || 1
+
+    query =
+      from u in PortalCms.Portal.UserRole,
+        where: u.user_id == type(^user_id, :integer) and u.app_id == type(^app_id, :integer),
+        select: u.role_id
+
+    existRoles = Repo.all(query)
+
     app = Portal.get_app!(app_id)
     appRole = Portal.get_app!(app_id) |> Repo.preload([:roles])
 
     usersList = Repo.all(PortalCms.Accounts.User)
     users = Enum.map(usersList, &{"#{&1.email}", &1.id})
+    userIds = Enum.map(usersList, & &1.id)
 
     user_role = Ecto.build_assoc(app, :user_role, %UserRole{})
-
-    query =
-      from u in PortalCms.Portal.UserRole,
-        where: u.user_id == type(^"1", :integer) and u.app_id == type(^app_id, :integer),
-        select: u.role_id
-
-    existRoles = Repo.all(query)
 
     socket
     |> assign(:page_title, "New User role")
@@ -68,6 +75,8 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
     |> assign(:users, users)
     |> assign(:existRoles, existRoles)
     |> assign(:actions, "new")
+    |> assign(:user_id, user_id)
+    |> assign(:userIds, userIds)
   end
 
   defp apply_action(socket, :index, %{"app_id" => app_id}) do

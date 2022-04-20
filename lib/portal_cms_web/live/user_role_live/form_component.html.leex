@@ -9,7 +9,7 @@
 
   <%= label f, :user_id %>
   <%= if @actions == "new" do %>
-    <%= select f, :user_id, @users, class: "form-select form-select-sm" %>
+    <%= select f, :user_id, @users, value: @user_id, class: "form-select form-select-sm", onchange: "val()" %>
   <% else %>
     <%= hidden_input f, :user_id %>
     <%= select f, :user_id, @users, class: "form-select form-select-sm", disabled: true %>
@@ -30,3 +30,17 @@
 
   <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary" %>
 </form>
+
+<script>
+  var urls={
+    <%= for id <- @userIds do %>
+      <%= id %>: "<%= Routes.user_role_index_path(@socket, :new, @app, user_id: id) %>",
+    <% end %>
+  }
+
+  function val() {
+    var roleId = document.getElementById("user_role-form_user_id").value;
+    console.log("roleId:",roleId)
+    window.location.replace(urls[roleId]);
+  }
+</script>
