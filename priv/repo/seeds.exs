@@ -18,6 +18,8 @@ alias PortalCms.Portal.Feature
 alias PortalCms.Portal.Role
 alias PortalCms.Portal.Permission
 alias PortalCms.Accounts.User
+alias PortalCms.Portal.ContentPage
+alias PortalCms.Portal.ContentBlock
 
 require Logger
 
@@ -26,13 +28,16 @@ Repo.delete_all(Feature)
 Repo.delete_all(Role)
 Repo.delete_all(NavItem)
 Repo.delete_all(Navigation)
+Repo.delete_all(ContentPage)
+Repo.delete_all(ContentBlock)
 Repo.delete_all(App)
+Repo.delete_all(User)
 
 # users password:- algo@1234567
 user =
   Repo.insert!(
     %User{
-      email: "Test@gmail.com",
+      email: "test@gmail.com",
       hashed_password: "$2b$12$/7pgnNn2Pwqti0KYVn886O406dRxjvHbsxXQZ8oEKoBw114wURFqO"
     },
     returning: [:id]

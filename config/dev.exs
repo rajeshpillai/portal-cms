@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 # config :portal_cms, PortalCms.Repo,
@@ -12,7 +12,7 @@ use Mix.Config
 # Configure your database
 config :portal_cms, PortalCms.Repo,
   username: System.get_env("POSTGRES_USER") || "postgres",
-  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
+  password: System.get_env("POSTGRES_PASSWORD") || "root123",
   database: System.get_env("POSTGRES_DB") || "portal_cms_dev",
   hostname: System.get_env("POSTGRES_HOST") || "localhost",
   show_sensitive_data_on_connection_error: true,
