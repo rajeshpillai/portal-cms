@@ -54,7 +54,7 @@ defmodule PortalCms.Portal do
   """
   def create_app(attrs \\ %{}) do
     %App{}
-    |> App.changeset(attrs)
+    |> App.create_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -155,7 +155,7 @@ defmodule PortalCms.Portal do
   """
   def create_navigation(attrs \\ %{}) do
     %Navigation{}
-    |> Navigation.changeset(attrs)
+    |> Navigation.create_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -258,7 +258,7 @@ defmodule PortalCms.Portal do
     IO.inspect(attrs)
 
     %NavItem{}
-    |> NavItem.changeset(attrs)
+    |> NavItem.create_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -359,7 +359,7 @@ defmodule PortalCms.Portal do
   """
   def create_content_page(attrs \\ %{}) do
     %ContentPage{}
-    |> ContentPage.changeset(attrs)
+    |> ContentPage.create_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -460,7 +460,7 @@ defmodule PortalCms.Portal do
   """
   def create_feature(attrs \\ %{}) do
     %Feature{}
-    |> Feature.changeset(attrs)
+    |> Feature.create_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -561,7 +561,7 @@ defmodule PortalCms.Portal do
   """
   def create_role(attrs \\ %{}) do
     %Role{}
-    |> Role.changeset(attrs)
+    |> Role.create_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -662,7 +662,7 @@ defmodule PortalCms.Portal do
   """
   def create_content_block(attrs \\ %{}) do
     %ContentBlock{}
-    |> ContentBlock.changeset(attrs)
+    |> ContentBlock.create_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -778,7 +778,7 @@ defmodule PortalCms.Portal do
   """
   def create_permission(attrs \\ %{}) do
     %Permission{}
-    |> Permission.changeset(attrs)
+    |> Permission.create_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -842,6 +842,11 @@ defmodule PortalCms.Portal do
   """
   def list_userroles do
     Repo.all(UserRole)
+  end
+
+  def list_userroles(app_id) do
+    q = from u in UserRole, where: u.app_id == ^app_id
+    Repo.all(q)
   end
 
   @doc """

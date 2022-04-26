@@ -5,16 +5,11 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
   alias PortalCms.Portal.UserRole
   alias PortalCms.Repo
 
+  import Ecto.Query, only: [from: 2]
+
   @impl true
   def mount(%{"app_id" => app_id}, _session, socket) do
-    app = Portal.get_app!(app_id)
-
-    socket =
-      socket
-      |> assign(:userroles, list_userroles())
-      |> assign(:app, app)
-
-    {:ok, socket}
+    {:ok, assign(socket, :userroles, list_userroles(app_id))}
   end
 
   @impl true
@@ -22,24 +17,53 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit User role")
-    |> assign(:user_role, Portal.get_user_role!(id))
-  end
-
-  # defp apply_action(socket, :new, _params) do
-  #   socket
-  #   |> assign(:page_title, "New User role")
-  #   |> assign(:user_role, %UserRole{})
-  # end
-
-  defp apply_action(socket, :new, %{"app_id" => app_id}) do
+  defp apply_action(socket, :edit, %{"id" => id, "app_id" => app_id}) do
     app = Portal.get_app!(app_id)
     appRole = Portal.get_app!(app_id) |> Repo.preload([:roles])
 
     usersList = Repo.all(PortalCms.Accounts.User)
     users = Enum.map(usersList, &{"#{&1.email}", &1.id})
+    userIds = Enum.map(usersList, & &1.id)
+
+    userRole = Portal.get_user_role!(id)
+
+    query =
+      from u in PortalCms.Portal.UserRole,
+        where:
+          u.user_id == type(^userRole.user_id, :integer) and u.app_id == type(^app_id, :integer),
+        select: u.role_id
+
+    existRoles = Repo.all(query)
+
+    socket
+    |> assign(:page_title, "Edit User role")
+    |> assign(:user_role, userRole)
+    |> assign(:existRoles, existRoles)
+    |> assign(:app, app)
+    |> assign(:appRoles, appRole.roles)
+    |> assign(:users, users)
+    |> assign(:actions, "edit")
+    |> assign(:user_id, userRole.user_id)
+    |> assign(:userIds, userIds)
+  end
+
+  defp apply_action(socket, :new, params) do
+    app_id = params["app_id"]
+    user_id = params["user_id"] || 1
+
+    query =
+      from u in PortalCms.Portal.UserRole,
+        where: u.user_id == type(^user_id, :integer) and u.app_id == type(^app_id, :integer),
+        select: u.role_id
+
+    existRoles = Repo.all(query)
+
+    app = Portal.get_app!(app_id)
+    appRole = Portal.get_app!(app_id) |> Repo.preload([:roles])
+
+    usersList = Repo.all(PortalCms.Accounts.User)
+    users = Enum.map(usersList, &{"#{&1.email}", &1.id})
+    userIds = Enum.map(usersList, & &1.id)
 
     user_role = Ecto.build_assoc(app, :user_role, %UserRole{})
 
@@ -49,28 +73,19 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
     |> assign(:app, app)
     |> assign(:appRoles, appRole.roles)
     |> assign(:users, users)
-    # |> IO.inspect(label: "user_role_page")
+    |> assign(:existRoles, existRoles)
+    |> assign(:actions, "new")
+    |> assign(:user_id, user_id)
+    |> assign(:userIds, userIds)
   end
 
-  # defp apply_action(socket, :new, %{"app_id" => app_id}) do
-  #   app = Portal.get_app!(app_id)
+  defp apply_action(socket, :index, %{"app_id" => app_id}) do
+    app = Portal.get_app!(app_id)
 
-  #   # changeset = Portal.change_nav_item(%NavItem{}, %{navigation_id: id})
-
-  #   content_page = Ecto.build_assoc(app, :content_page, %ContentPage{})
-  #   IO.inspect(content_page)
-
-  #   socket
-  #   |> assign(:page_title, "New Content page")
-  #   # |> assign(:content_page, Portal.change_content_page(%ContentPage{}, %{app_id: app_id}))
-  #   |> assign(:content_page, content_page)
-  #   |> assign(:app, app)
-  # end
-
-  defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Listing Userroles")
     |> assign(:user_role, nil)
+    |> assign(:app, app)
   end
 
   @impl true
@@ -78,10 +93,20 @@ defmodule PortalCmsWeb.UserRoleLive.Index do
     user_role = Portal.get_user_role!(id)
     {:ok, _} = Portal.delete_user_role(user_role)
 
-    {:noreply, assign(socket, :userroles, list_userroles())}
+    {:noreply, assign(socket, :userroles, list_userroles(user_role.app_id))}
   end
 
-  defp list_userroles do
-    Portal.list_userroles()
+  defp list_userroles(app_id) do
+    Portal.list_userroles(app_id)
+  end
+
+  defp findUsernameByUserId(user_id) do
+    user = Repo.get!(PortalCms.Accounts.User, user_id)
+    user.email
+  end
+
+  defp findRolenameByRoleId(role_id) do
+    role = Repo.get!(PortalCms.Portal.Role, role_id)
+    role.name
   end
 end

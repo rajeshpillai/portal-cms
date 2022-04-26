@@ -5,8 +5,8 @@ defmodule PortalCmsWeb.NavItemLive.Edit do
   alias PortalCms.Portal.NavItem
 
   @impl true
-  def mount(_params, _session, socket) do
-    IO.puts("NavItem mount..")
+  def mount(_params, session, socket) do
+    socket = assign_defaults(session, socket)
     {:ok, socket}
   end
 
@@ -23,6 +23,7 @@ defmodule PortalCmsWeb.NavItemLive.Edit do
       title: @page_title,
       action: @live_action,
       nav_item: @nav_item,
+      current_user: @current_user,
       return_to: "/navigations/1"  %>
 
     """

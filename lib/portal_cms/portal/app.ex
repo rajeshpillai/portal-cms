@@ -17,10 +17,16 @@ defmodule PortalCms.Portal.App do
     timestamps()
   end
 
+  def create_changeset(app, attrs) do
+    app
+    |> cast(attrs, [:name, :user_id])
+    |> validate_required([:name, :user_id])
+  end
+
   @doc false
   def changeset(app, attrs) do
     app
-    |> cast(attrs, [:name,:user_id])
+    |> cast(attrs, [:name, :user_id])
     |> validate_required([:name])
   end
 end

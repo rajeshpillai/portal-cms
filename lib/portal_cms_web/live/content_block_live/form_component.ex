@@ -41,6 +41,9 @@ defmodule PortalCmsWeb.ContentBlockLive.FormComponent do
   end
 
   defp save_content_block(socket, :new, content_block_params) do
+    current_user = socket.assigns.current_user
+    content_block_params = Map.put(content_block_params, "user_id", current_user.id)
+
     case Portal.create_content_block(content_block_params) do
       {:ok, _content_block} ->
         {:noreply,

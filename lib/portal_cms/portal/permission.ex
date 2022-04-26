@@ -13,10 +13,16 @@ defmodule PortalCms.Portal.Permission do
     timestamps()
   end
 
+  def create_changeset(permission, attrs) do
+    permission
+    |> cast(attrs, [:name, :feature_id, :user_id])
+    |> validate_required([:name, :user_id])
+  end
+
   @doc false
   def changeset(permission, attrs) do
     permission
-    |> cast(attrs, [:name,:feature_id,:user_id])
+    |> cast(attrs, [:name, :feature_id, :user_id])
     |> validate_required([:name])
   end
 end

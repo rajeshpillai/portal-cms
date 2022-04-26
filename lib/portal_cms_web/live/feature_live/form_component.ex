@@ -41,6 +41,9 @@ defmodule PortalCmsWeb.FeatureLive.FormComponent do
   end
 
   defp save_feature(socket, :new, feature_params) do
+    current_user = socket.assigns.current_user
+    feature_params = Map.put(feature_params, "user_id", current_user.id)
+
     case Portal.create_feature(feature_params) do
       {:ok, _feature} ->
         {:noreply,

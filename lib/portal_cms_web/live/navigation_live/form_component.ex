@@ -41,6 +41,9 @@ defmodule PortalCmsWeb.NavigationLive.FormComponent do
   end
 
   defp save_navigation(socket, :new, navigation_params) do
+    current_user = socket.assigns.current_user
+    navigation_params = Map.put(navigation_params, "user_id", current_user.id)
+
     case Portal.create_navigation(navigation_params) do
       {:ok, _navigation} ->
         {:noreply,

@@ -41,6 +41,9 @@ defmodule PortalCmsWeb.AppLive.FormComponent do
   end
 
   defp save_app(socket, :new, app_params) do
+    current_user = socket.assigns.current_user
+    app_params = Map.put(app_params, "user_id", current_user.id)
+
     case Portal.create_app(app_params) do
       {:ok, _app} ->
         {:noreply,

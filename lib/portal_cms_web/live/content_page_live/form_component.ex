@@ -41,6 +41,9 @@ defmodule PortalCmsWeb.ContentPageLive.FormComponent do
   end
 
   defp save_content_page(socket, :new, content_page_params) do
+    current_user = socket.assigns.current_user
+    content_page_params = Map.put(content_page_params, "user_id", current_user.id)
+
     case Portal.create_content_page(content_page_params) do
       {:ok, _content_page} ->
         {:noreply,

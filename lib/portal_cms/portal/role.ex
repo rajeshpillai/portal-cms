@@ -12,6 +12,12 @@ defmodule PortalCms.Portal.Role do
     timestamps()
   end
 
+  def create_changeset(role, attrs) do
+    role
+    |> cast(attrs, [:name, :app_id, :user_id])
+    |> validate_required([:name, :user_id])
+  end
+
   @doc false
   def changeset(role, attrs) do
     role
